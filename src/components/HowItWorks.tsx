@@ -8,7 +8,7 @@ export function HowItWorks() {
     {
       id: "api",
       title: "Integração Direta via API",
-      description: "Use nosso front-end diretamente no seu sistema",
+      description: "Use nossa API diretamente no seu sistema",
       icon: "i-tabler-api",
       features: [
         "Controle total da interface",
@@ -152,11 +152,24 @@ https://backoffice.pixtopay.com.br/plataforma/`,
                   </a>
                 )}
               </div>
-              <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                <pre className="text-green-400 text-sm">
-                  <code>{integrationMethods[activeTab].code}</code>
-                </pre>
-              </div>
+              {activeTab === 2 ? (
+                <div className="relative rounded-2xl shadow-2xl ring-1 ring-black/10 overflow-hidden bg-white">
+                  <div className="aspect-[4/3] w-full">
+                    <img
+                      src="/assets/images/dash.png"
+                      alt="Exemplo de dashboard PixtoPay"
+                      className="w-full h-full object-contain opacity-90"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto shadow-lg">
+                  <pre className="text-green-400 text-sm">
+                    <code>{integrationMethods[activeTab].code}</code>
+                  </pre>
+                </div>
+              )}
             </div>
           </motion.div>
         </div>
