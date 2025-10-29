@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@import "../theme/variables.css";
+
+:root {
+  font-family: "Inter", sans-serif;
+  color: var(--text-body);
+  background-color: var(--brand-bg);
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  @apply antialiased;
+  overflow-x: hidden;
+}

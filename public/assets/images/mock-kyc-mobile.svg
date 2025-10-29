@@ -1,0 +1,11 @@
+<svg width="256" height="380" viewBox="0 0 256 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="380" fill="#F9FAFB"/>
+  <rect x="16" y="40" width="224" height="40" rx="20" fill="#A9D001"/>
+  <text x="128" y="60" font-family="Arial" font-size="14" font-weight="600" text-anchor="middle" fill="#1D2939">KYC PixtoPay</text>
+  <circle cx="128" cy="140" r="40" fill="#FFFFFF" stroke="#A9D001" stroke-width="4"/>
+  <circle cx="128" cy="140" r="24" fill="#A9D001"/>
+  <text x="128" y="200" font-family="Arial" font-size="16" font-weight="600" text-anchor="middle" fill="#1D2939">Aponte a câmera</text>
+  <text x="128" y="220" font-family="Arial" font-size="12" text-anchor="middle" fill="#667085">Fotografe seu rosto</text>
+  <rect x="16" y="260" width="224" height="40" rx="20" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="128" y="280" font-family="Arial" font-size="14" font-weight="400" text-anchor="middle" fill="#667085">Continuar verificação</text>
+</svg>

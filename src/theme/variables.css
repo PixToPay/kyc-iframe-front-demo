@@ -1,0 +1,13 @@
+:root {
+  --brand-primary: #a9d001;
+  --brand-dark: #1d2939;
+  --brand-bg: #f9fafb;
+  --kyc-accent: #c0f334;
+  --text-title: #101828;
+  --text-body: #667085;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --card: #ffffff;
+  --muted: #f2f4f7;
+}
