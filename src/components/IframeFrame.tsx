@@ -3,14 +3,16 @@ import { buildKycUrl } from "@/lib/kyc";
 export function IframeFrame({ guid }: { guid?: string }) {
   const src = guid ? buildKycUrl({ guid }) : "about:blank";
   return (
-    <div className="relative rounded-4xl bg-black shadow-2xl overflow-hidden border-8 border-gray-800 w-[360px] h-[800px] lg:w-[385px] lg:h-[850px] mx-auto">
-      <iframe
-        src={src}
-        allow="camera; geolocation"
-        className="w-full h-full rounded-3xl"
-        style={{ width: "100%", height: "100%" }}
-      />
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-24 h-1.5 bg-gray-600 rounded-full"></div>
+    <div className="relative bg-black shadow-2xl overflow-hidden border-8 border-gray-800 rounded-[28px] mx-auto w-full max-w-[430px] md:max-w-[430px] lg:max-w-[430px]">
+      <div className="relative w-full aspect-[390/844] overflow-hidden">
+        <iframe
+          src={src}
+          allow="camera; geolocation"
+          className="absolute inset-0 w-full h-full rounded-3xl overflow-hidden"
+          referrerPolicy="origin"
+        />
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 bg-gray-600/80 rounded-full"></div>
+      </div>
     </div>
   );
 }

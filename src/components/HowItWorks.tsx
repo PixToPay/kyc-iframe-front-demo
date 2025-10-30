@@ -86,7 +86,7 @@ https://backoffice.pixtopay.com.br/plataforma/`,
     <section className="py-20 bg-white" id="how-it-works">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-[color:var(--brand-dark)] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[color:var(--brand-dark)] mb-4">
             Como funciona
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -120,15 +120,15 @@ https://backoffice.pixtopay.com.br/plataforma/`,
           >
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               <div>
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-2">
                   <i
-                    className={`${integrationMethods[activeTab].icon} text-3xl text-[color:var(--brand-primary)]`}
+                    className={`${integrationMethods[activeTab].icon} text-4xl text-[color:var(--brand-dark)] bg-[color:var(--brand-primary)]/15 border-2 border-[color:var(--brand-primary)] rounded-full p-2`}
                   ></i>
-                  <h3 className="text-xl font-semibold text-[color:var(--brand-dark)]">
+                  <h3 className="text-xl md:text-2xl font-semibold text-[color:var(--brand-dark)]">
                     {integrationMethods[activeTab].title}
                   </h3>
                 </div>
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-4">
                   {integrationMethods[activeTab].description}
                 </p>
                 <ul className="space-y-2 mb-6">

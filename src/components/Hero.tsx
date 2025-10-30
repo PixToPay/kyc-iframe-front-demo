@@ -19,14 +19,14 @@ export function Hero({ onStart }: { onStart: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-3xl md:text-3xl lg:text-3xl xl:text-4xl font-bold text-white mb-6 leading-snug">
                 Veja como o KYC da PixtoPay pode ser integrado ao seu sistema em
                 minutos.
               </h1>
             </motion.div>
 
             <motion.p
-              className="text-base md:text-lg lg:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed"
+              className="text-base md:text-lg lg:text-lg text-white/90 max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}

@@ -3,14 +3,17 @@ import { api } from "@/lib/api";
 
 export function useKycSession() {
   return useMutation({
-    mutationFn: async ({ cpf, flow }: { cpf: string; flow: string }) => {
+    mutationFn: async ({ cpf }: { cpf: string }) => {
+      const integrationId =
+        import.meta.env.VITE_INTEGRATION_ID || "integration_id_missing";
       const { data } = await api.post(
-        "/kyc/pre-register",
-        { cpf, flow },
+        "/customer/register",
+        { cpf, integration_id: integrationId },
         {
           headers: {
-            "x-public-key":
-              import.meta.env.VITE_PUBLIC_KEY || "pk_dev_xxxxxxxxx",
+            Authorization: `Bearer ${
+              import.meta.env.VITE_PUBLIC_KEY || "pk_dev_xxxxxxxxx"
+            }`,
           },
         }
       );

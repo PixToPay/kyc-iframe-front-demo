@@ -20,7 +20,7 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
 
   return (
     <section id="demo" className="py-20 bg-[color:var(--muted)]">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 md:px-0">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-[color:var(--brand-dark)] mb-4">
             Demonstração Interativa
@@ -31,11 +31,11 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-[320px_minmax(0,1fr)_340px] gap-5 lg:gap-5 items-start">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 max-w-[320px] w-full mx-auto lg:mx-0"
           >
             <CpfForm
               onGuidGenerated={handleGuidGenerated}
@@ -47,7 +47,7 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 flex justify-center"
           >
             <IframeFrame guid={guid} />
           </motion.div>
@@ -55,7 +55,7 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            className="lg:col-span-1"
+            className="lg:col-span-1 max-w-[340px] w-full mx-auto lg:mx-0"
           >
             <PostMessageConsole logs={logs} status={status} step={step} />
           </motion.div>

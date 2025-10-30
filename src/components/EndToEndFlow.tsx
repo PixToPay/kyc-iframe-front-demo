@@ -119,10 +119,12 @@ function StepCard({ step }: { step: Step }) {
     >
       {/* Header */}
       <div className="flex items-center gap-2 mb-2">
-        <Icon
-          icon={step.icon}
-          className="text-[color:var(--brand-primary)] text-lg"
-        />
+        <span className="w-10 h-10 rounded-full bg-[color:var(--brand-primary)]/15 border-2 border-[color:var(--brand-primary)] flex items-center justify-center">
+          <Icon
+            icon={step.icon}
+            className="text-[color:var(--brand-dark)] text-xl"
+          />
+        </span>
         <h4 className="font-semibold text-[color:var(--brand-dark)] text-base md:text-lg">
           {step.id}. {step.title}
         </h4>

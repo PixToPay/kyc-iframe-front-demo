@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { validateCPF } from "@/lib/validators";
+import { useKycSession } from "@/hooks/useKycSession";
 
 interface CpfFormProps {
   onGuidGenerated: (guid: string) => void;
@@ -16,6 +17,7 @@ export function CpfForm({
   const [cpf, setCpf] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { mutateAsync } = useKycSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,13 +27,17 @@ export function CpfForm({
     }
     setError("");
     setIsLoading(true);
-
-    // Simular geração de GUID (em produção viria da API)
-    setTimeout(() => {
-      const guid = `kyc-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    try {
+      const cpfDigits = cpf.replace(/\D/g, "");
+      const data = await mutateAsync({ cpf: cpfDigits });
+      const guid = data?.onboarding_id || data?.guid;
+      if (!guid) throw new Error("onboarding_id_missing");
       onGuidGenerated(guid);
+    } catch (err) {
+      setError("Não foi possível iniciar a sessão. Tente novamente.");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleReset = () => {

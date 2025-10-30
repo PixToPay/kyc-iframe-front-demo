@@ -24,14 +24,17 @@ export function IframeContainer({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="rounded-2xl overflow-hidden shadow-xl bg-white border">
-        <iframe
-          id="kyc-iframe"
-          src={src}
-          className="w-full h-[72vh] block"
-          allow="camera; geolocation; fullscreen"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
-        />
+      <div className="rounded-2xl overflow-hidden shadow-xl bg-white border max-w-[400px] md:max-w-[380px] lg:max-w-[400px] mx-auto w-full">
+        <div className="relative w-full aspect-[390/844] overflow-hidden">
+          <iframe
+            id="kyc-iframe"
+            src={src}
+            className="absolute inset-0 w-full h-full block overflow-hidden"
+            allow="camera; geolocation; fullscreen"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups"
+            referrerPolicy="origin"
+          />
+        </div>
       </div>
       <div className="flex items-center gap-3 mt-3">
         <StatusPill status={status} />
