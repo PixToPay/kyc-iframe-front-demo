@@ -96,12 +96,20 @@ yarn preview
 ### Integração via API
 
 ```typescript
-const response = await fetch("/api/kyc/start", {
+const response = await fetch("https://api.dev.pixtopay.com/customer/register", {
   method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ cpf: "12345678901" }),
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_PUBLIC_KEY"
+  },
+  body: JSON.stringify({
+    cpf: "00000000272",
+    integration_id: "GUID",
+    webhook_url: "https://webhook.site/...", // opcional
+    transaction_id: "GUID" // opcional
+  }),
 });
-const { sessionId } = await response.json();
+const { onboarding_id } = await response.json();
 ```
 
 ### Integração via Iframe

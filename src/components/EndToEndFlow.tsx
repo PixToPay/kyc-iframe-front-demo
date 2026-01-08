@@ -40,15 +40,22 @@ const STEPS: Step[] = [
   },
   {
     id: 2,
-    title: "Criar sessão (pre-register)",
+    title: "Criar sessão (register)",
     subtitle: "CPF → GUID para onboarding ou liveness",
     icon: "tabler:cursor-text",
     badge: "API",
     highlights: [
-      "Envie CPF e tipo de fluxo",
+      "Envie CPF e integration_id",
+      "Parâmetros opcionais: webhook_url, transaction_id",
       "Receba GUID e validade da sessão",
     ],
-    code: `POST /kyc/pre-register { cpf, flow } -> { guid }`,
+    code: `POST /customer/register
+{
+  "cpf": "00000000272",
+  "integration_id": "...",
+  "webhook_url": "https://...", // opcional
+  "transaction_id": "..." // opcional
+} -> { onboarding_id }`,
   },
   {
     id: 3,
