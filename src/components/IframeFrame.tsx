@@ -1,7 +1,19 @@
 import { buildKycUrl } from "@/lib/kyc";
 
-export function IframeFrame({ guid }: { guid?: string }) {
-  const src = guid ? buildKycUrl({ guid }) : "about:blank";
+export function IframeFrame({
+  guid,
+  type,
+}: {
+  guid?: string;
+  type?: "onboarding" | "liveness";
+}) {
+  const src = guid
+    ? buildKycUrl({
+        guid,
+        flow: type === "liveness" ? "kyc-faceindex" : undefined,
+      })
+    : "about:blank";
+
   return (
     <div className="relative bg-black shadow-2xl overflow-hidden border-8 border-gray-800 rounded-[28px] mx-auto w-full max-w-[430px] md:max-w-[430px] lg:max-w-[430px]">
       <div className="relative w-full aspect-[390/844] overflow-hidden">

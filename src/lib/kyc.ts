@@ -11,7 +11,7 @@ export function buildKycUrl({
 }) {
   const origin =
     import.meta.env.VITE_KYC_FRONT_ORIGIN || "https://kyc.dev.pixtopay.com";
-  const url = new URL(`${origin}/`);
+  const url = new URL(`${origin}/${flow === "kyc-faceindex" ? "verify" : ""}`);
   url.searchParams.set("guid", guid);
   url.searchParams.set("step", String(step));
   const language = (lang || import.meta.env.VITE_LANG || "pt").toString();
