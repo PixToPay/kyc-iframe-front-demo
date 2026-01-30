@@ -2,17 +2,20 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 interface OnboardingIdFormProps {
-  onGuidGenerated: (guid: string) => void;
+  onGuidGenerated: (guid: string, submissionId?: string) => void;
   onReset?: () => void;
   isProcessStarted?: boolean;
+  showSubmissionId?: boolean;
 }
 
 export function OnboardingIdForm({
   onGuidGenerated,
   onReset,
   isProcessStarted = false,
+  showSubmissionId = false,
 }: OnboardingIdFormProps) {
   const [guid, setGuid] = useState("");
+  const [submissionId, setSubmissionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,15 +23,20 @@ export function OnboardingIdForm({
     if (!guid.trim()) return;
 
     setIsLoading(true);
-    // Simulate a small delay or validation if needed, but here we just pass it through
     setTimeout(() => {
-      onGuidGenerated(guid.trim());
+      onGuidGenerated(
+        guid.trim(),
+        showSubmissionId && submissionId.trim()
+          ? submissionId.trim()
+          : undefined
+      );
       setIsLoading(false);
     }, 500);
   };
 
   const handleReset = () => {
     setGuid("");
+    setSubmissionId("");
     onReset?.();
   };
 
@@ -59,6 +67,25 @@ export function OnboardingIdForm({
             required
           />
         </div>
+
+        {showSubmissionId && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Submission ID <span className="text-gray-400">(opcional)</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Ex: 17e2b47e-283a-4f5a-8e0a-..."
+              value={submissionId}
+              onChange={(e) => setSubmissionId(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Preencha quando a API retornar submission_id para montar a URL de
+              liveness (step=6, flow=liveness).
+            </p>
+          </div>
+        )}
 
         {!isProcessStarted ? (
           <motion.button

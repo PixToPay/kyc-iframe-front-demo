@@ -8,13 +8,15 @@ import { useState } from "react";
 
 export function DemoSection({ guid: initialGuid }: { guid?: string }) {
   const [guid, setGuid] = useState<string | undefined>(initialGuid);
+  const [submissionId, setSubmissionId] = useState<string | undefined>();
   const [activeForm, setActiveForm] = useState<"onboarding" | "liveness">(
     "onboarding"
   );
   const { logs, status, step, clearLogs } = usePostMessage();
 
-  const handleGuidGenerated = (newGuid: string) => {
+  const handleGuidGenerated = (newGuid: string, newSubmissionId?: string) => {
     setGuid(newGuid);
+    setSubmissionId(newSubmissionId);
   };
 
   const handleChangeActiveForm = (newForm: "onboarding" | "liveness") => {
@@ -24,6 +26,7 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
 
   const handleReset = () => {
     setGuid(undefined);
+    setSubmissionId(undefined);
     clearLogs();
   };
 
@@ -80,6 +83,7 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
                 onGuidGenerated={handleGuidGenerated}
                 onReset={handleReset}
                 isProcessStarted={!!guid}
+                showSubmissionId
               />
             )}
           </motion.div>
@@ -89,7 +93,11 @@ export function DemoSection({ guid: initialGuid }: { guid?: string }) {
             whileInView={{ opacity: 1, y: 0 }}
             className="lg:col-span-1 flex justify-center"
           >
-            <IframeFrame guid={guid} type={activeForm} />
+            <IframeFrame
+              guid={guid}
+              type={activeForm}
+              submissionId={activeForm === "liveness" ? submissionId : undefined}
+            />
           </motion.div>
 
           <motion.div
