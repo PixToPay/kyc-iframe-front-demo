@@ -4,12 +4,16 @@ export function buildKycUrl({
   flow,
   lang,
   submissionId,
+  redirectUrl,
+  state,
 }: {
   guid: string;
   step?: number;
   flow?: string;
   lang?: string;
   submissionId?: string;
+  redirectUrl?: string;
+  state?: string;
 }) {
   const isLiveness =
     flow === "kyc-faceindex" || flow === "liveness";
@@ -22,5 +26,7 @@ export function buildKycUrl({
   if (language) url.searchParams.set("lang", language);
   if (isLiveness) url.searchParams.set("onlyliveness", "1");
   if (submissionId) url.searchParams.set("submission_id", submissionId);
+  if (redirectUrl) url.searchParams.set("redirectUrl", redirectUrl);
+  if (state) url.searchParams.set("state", state);
   return url.toString();
 }

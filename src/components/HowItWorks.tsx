@@ -54,6 +54,24 @@ const { onboarding_id } = await response.json();`,
 />`,
     },
     {
+      id: "redirect",
+      title: "Redirect (URL Externa)",
+      description:
+        "Envie o usuário direto para a página de KYC e receba o resultado via redirect na sua URL. Ideal para mobile, webview e fluxos fora do seu domínio.",
+      icon: "i-tabler-external-link",
+      features: [
+        "Navegação full-page ou nova aba",
+        "Retorno via querystring na redirectUrl",
+        "Ideal para apps mobile (webview) e links diretos",
+        "Fallback para postMessage se a URL for inválida",
+      ],
+      code: `const url = new URL("https://kyc-front.pixtopay.com.br/");
+url.searchParams.set("guid", guid);
+url.searchParams.set("redirectUrl", "https://meuapp.com/callback/kyc");
+url.searchParams.set("state", "user123_nonce");
+window.open(url.toString(), "_blank");`,
+    },
+    {
       id: "dashboard",
       title: "Dashboard de Gerenciamento",
       description: "Controle completo via backoffice da PixtoPay",
@@ -98,18 +116,18 @@ https://backoffice.pixtopay.com.br/plataforma/`,
             Como funciona
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Três formas de integrar o KYC PixtoPay ao seu sistema, desde
+            Quatro formas de integrar o KYC PixtoPay ao seu sistema, desde
             implementação rápida até controle total.
           </p>
         </div>
 
         <div className="mb-16">
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-wrap justify-center gap-2 mb-6">
             {integrationMethods.map((method, index) => (
               <button
                 key={method.id}
                 onClick={() => setActiveTab(index)}
-                className={`px-6 py-3 rounded-lg font-medium transition ${
+                className={`px-4 py-2.5 rounded-lg font-medium transition text-sm sm:text-base ${
                   activeTab === index
                     ? "bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)]"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
@@ -118,6 +136,27 @@ https://backoffice.pixtopay.com.br/plataforma/`,
                 {method.title}
               </button>
             ))}
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-4 mb-8 max-w-3xl mx-auto">
+            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+              <h4 className="font-semibold text-[color:var(--brand-dark)] text-sm mb-2">
+                Embedded (Iframe)
+              </h4>
+              <p className="text-xs text-gray-600">
+                Usuário na sua página. Resultado via postMessage em tempo real.
+                Recomendado para portais web e SPAs.
+              </p>
+            </div>
+            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+              <h4 className="font-semibold text-[color:var(--brand-dark)] text-sm mb-2">
+                Redirect (URL externa)
+              </h4>
+              <p className="text-xs text-gray-600">
+                KYC em nova aba ou webview. Resultado na querystring da
+                redirectUrl. Ideal para mobile e links diretos.
+              </p>
+            </div>
           </div>
 
           <motion.div
@@ -149,7 +188,7 @@ https://backoffice.pixtopay.com.br/plataforma/`,
                     )
                   )}
                 </ul>
-                {activeTab === 2 && (
+                {activeTab === 3 && (
                   <a
                     href="https://backoffice.pixtopay.com.br/plataforma/"
                     target="_blank"
@@ -160,7 +199,7 @@ https://backoffice.pixtopay.com.br/plataforma/`,
                   </a>
                 )}
               </div>
-              {activeTab === 2 ? (
+              {activeTab === 3 ? (
                 <div className="relative rounded-2xl shadow-2xl ring-1 ring-black/10 overflow-hidden bg-white">
                   <div className="aspect-[4/3] w-full">
                     <img
