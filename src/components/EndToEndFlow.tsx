@@ -59,13 +59,14 @@ const STEPS: Step[] = [
   },
   {
     id: 3,
-    title: "Abrir o fluxo",
-    subtitle: "Monte a URL no iframe (mobile-first)",
+    title: "Abrir o fluxo de verificação",
+    subtitle: "Iframe (embedded) ou redirect em nova aba",
     icon: "tabler:link",
-    badge: "Iframe",
+    badge: "Iframe / Redirect",
     highlights: [
-      "Carregue o link responsivo",
-      "Permissões: camera; geolocation",
+      "Iframe: carregue o link com allow camera; geolocation",
+      "Redirect: passe redirectUrl e state na URL do KYC",
+      "Sem iframe o resultado vem pela URL de callback",
     ],
     code: `<iframe src=".../?guid=UUID&step=1" allow="camera; geolocation" />`,
   },
@@ -358,7 +359,7 @@ export function EndToEndFlow() {
             href="#demo"
             className="inline-flex items-center gap-2 bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] font-semibold px-6 py-3 rounded-lg shadow hover:shadow-lg transition"
           >
-            Ver demonstração no iframe <Icon icon="tabler:arrow-right" />
+            Ver demonstração (iframe e redirect) <Icon icon="tabler:arrow-right" />
           </a>
           <p className="text-xs text-gray-500 mt-3">
             * Recomendado executar a verificação no celular (acesso à câmera e

@@ -2,10 +2,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 interface OnboardingIdFormProps {
-  onGuidGenerated: (guid: string, submissionId?: string) => void;
+  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string) => void;
   onReset?: () => void;
   isProcessStarted?: boolean;
   showSubmissionId?: boolean;
+  embedded?: boolean;
 }
 
 export function OnboardingIdForm({
@@ -13,6 +14,7 @@ export function OnboardingIdForm({
   onReset,
   isProcessStarted = false,
   showSubmissionId = false,
+  embedded = false,
 }: OnboardingIdFormProps) {
   const [guid, setGuid] = useState("");
   const [submissionId, setSubmissionId] = useState("");
@@ -28,7 +30,8 @@ export function OnboardingIdForm({
         guid.trim(),
         showSubmissionId && submissionId.trim()
           ? submissionId.trim()
-          : undefined
+          : undefined,
+        undefined
       );
       setIsLoading(false);
     }, 500);
@@ -40,20 +43,8 @@ export function OnboardingIdForm({
     onReset?.();
   };
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200"
-    >
-      <h3 className="text-lg font-semibold text-[color:var(--brand-dark)] mb-4">
-        Continuar Sessão KYC
-      </h3>
-      <p className="text-sm text-gray-600 mb-4">
-        Digite o ID da sessão (GUID) para continuar
-      </p>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+  const formContent = (
+    <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Onboarding ID (GUID) <span className="text-red-500">*</span>
@@ -106,13 +97,45 @@ export function OnboardingIdForm({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleReset}
-              className="w-full bg-gray-600 text-white font-semibold py-3 rounded-lg hover:opacity-90 transition"
+              type="button"
+              className="w-full bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] font-semibold py-3 rounded-xl hover:opacity-90 transition"
             >
-              Inserir Outro ID
+              Gerar nova sessão
             </motion.button>
           </div>
         )}
       </form>
+  );
+
+  if (embedded) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.18 }}
+        className="space-y-2"
+      >
+        <p className="text-sm text-gray-600">
+          Digite o ID da sessão (GUID) para continuar.
+        </p>
+        {formContent}
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200"
+    >
+      <h3 className="text-lg font-semibold text-[color:var(--brand-dark)] mb-4">
+        Continuar Sessão KYC
+      </h3>
+      <p className="text-sm text-gray-600 mb-4">
+        Digite o ID da sessão (GUID) para continuar
+      </p>
+      {formContent}
     </motion.div>
   );
 }

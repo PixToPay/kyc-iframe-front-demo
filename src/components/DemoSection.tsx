@@ -1,113 +1,156 @@
-import { IframeFrame } from "./IframeFrame";
-import { PostMessageConsole } from "./PostMessageConsole";
-import { CpfForm } from "./CpfForm";
-import { OnboardingIdForm } from "./OnboardingIdForm";
+import { KycDemoStepper } from "./KycDemoStepper";
 import { usePostMessage } from "@/hooks/usePostMessage";
+import { buildKycUrl } from "@/lib/kyc";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { RedirectResult } from "./RedirectResultPanel";
 
-export function DemoSection({ guid: initialGuid }: { guid?: string }) {
+type DemoMode = "iframe" | "redirect";
+type FlowType = "onboarding" | "liveness";
+
+export function DemoSection({
+  guid: initialGuid,
+  redirectResult = { isFromRedirect: false },
+  onClearRedirectResult,
+}: {
+  guid?: string;
+  redirectResult?: RedirectResult;
+  /** Limpa parâmetros KYC da URL ao reiniciar/gerar nova sessão (evita falso positivo no step Resultado) */
+  onClearRedirectResult?: () => void;
+}) {
   const [guid, setGuid] = useState<string | undefined>(initialGuid);
   const [submissionId, setSubmissionId] = useState<string | undefined>();
-  const [activeForm, setActiveForm] = useState<"onboarding" | "liveness">(
-    "onboarding"
+  const [cpfMasked, setCpfMasked] = useState<string | undefined>();
+  const [activeForm, setActiveForm] = useState<FlowType>("onboarding");
+  const [demoMode, setDemoMode] = useState<DemoMode>(
+    redirectResult.isFromRedirect ? "redirect" : "iframe"
   );
+  const [activeStep, setActiveStep] = useState(0);
+  const [configDirty, setConfigDirty] = useState(false);
+  const step2ContentRef = useRef<HTMLDivElement>(null);
   const { logs, status, step, clearLogs } = usePostMessage();
 
-  const handleGuidGenerated = (newGuid: string, newSubmissionId?: string) => {
+  useEffect(() => {
+    if (redirectResult.isFromRedirect) {
+      setDemoMode("redirect");
+      setActiveStep(2);
+    }
+  }, [redirectResult.isFromRedirect]);
+
+  useEffect(() => {
+    if (demoMode === "iframe" && activeStep === 2) setActiveStep(1);
+  }, [demoMode, activeStep]);
+
+  useEffect(() => {
+    if (activeStep === 1) {
+      const t = setTimeout(
+        () =>
+          step2ContentRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          }),
+        150
+      );
+      return () => clearTimeout(t);
+    }
+  }, [activeStep]);
+
+  const handleGuidGenerated = (
+    newGuid: string,
+    newSubmissionId?: string,
+    newCpfMasked?: string
+  ) => {
     setGuid(newGuid);
     setSubmissionId(newSubmissionId);
-  };
-
-  const handleChangeActiveForm = (newForm: "onboarding" | "liveness") => {
-    setActiveForm(newForm);
-    handleReset();
+    setCpfMasked(newCpfMasked);
+    setConfigDirty(false);
+    setActiveStep(1);
   };
 
   const handleReset = () => {
+    onClearRedirectResult?.();
     setGuid(undefined);
     setSubmissionId(undefined);
+    setCpfMasked(undefined);
+    setConfigDirty(false);
+    setActiveStep(0);
     clearLogs();
   };
 
+  const sessionValid = !!(guid && !configDirty);
+
+  const openRedirectDemo = () => {
+    if (!guid) return;
+    const base = `${window.location.origin}${window.location.pathname}`;
+    const redirectUrl = `${base}${base.includes("?") ? "&" : "?"}kycRedirect=1`;
+    const state = `demo-${Date.now()}`;
+    const flow = activeForm === "liveness" ? "kyc-faceindex" : undefined;
+    const url = buildKycUrl({
+      guid,
+      step: 1,
+      flow,
+      submissionId: activeForm === "liveness" ? submissionId : undefined,
+      redirectUrl,
+      state,
+    });
+    window.open(url, "_blank");
+  };
+
+  const step1Complete = !!guid;
+  const iframeComplete = sessionValid && !!status;
+  const step2Complete = redirectResult.isFromRedirect;
+
   return (
-    <section id="demo" className="py-20 bg-[color:var(--muted)]">
-      <div className="max-w-6xl mx-auto px-4 md:px-0">
+    <section
+      id="demo"
+      className="py-20 bg-[color:var(--muted)] overflow-x-hidden"
+      aria-labelledby="demo-title"
+    >
+      <div className="max-w-6xl mx-auto px-4 md:px-0 min-w-0">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-[color:var(--brand-dark)] mb-4">
+          <h2
+            id="demo-title"
+            className="text-3xl font-bold text-[color:var(--brand-dark)] mb-4"
+          >
             Demonstração Interativa
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Veja como funciona a integração do KYC PixtoPay em tempo real. Gere
-            uma sessão e acompanhe os eventos via postMessage.
+            Fluxo guiado em 3 passos: configure a sessão, inicie a verificação e
+            veja o resultado do retorno.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[320px_minmax(0,1fr)_340px] gap-5 lg:gap-5 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="lg:col-span-1 max-w-[320px] w-full mx-auto lg:mx-0"
-          >
-            <div className="bg-white rounded-2xl shadow-sm p-1 mb-4 border border-gray-200 flex">
-              <button
-                onClick={() => handleChangeActiveForm("onboarding")}
-                className={`flex-1 py-2 text-sm font-medium rounded-xl transition-all ${
-                  activeForm === "onboarding"
-                    ? "bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Novo Cadastro
-              </button>
-              <button
-                onClick={() => handleChangeActiveForm("liveness")}
-                className={`flex-1 py-2 text-sm font-medium rounded-xl transition-all ${
-                  activeForm === "liveness"
-                    ? "bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                Tenho ID
-              </button>
-            </div>
-
-            {activeForm === "onboarding" ? (
-              <CpfForm
-                onGuidGenerated={handleGuidGenerated}
-                onReset={handleReset}
-                isProcessStarted={!!guid}
-              />
-            ) : (
-              <OnboardingIdForm
-                onGuidGenerated={handleGuidGenerated}
-                onReset={handleReset}
-                isProcessStarted={!!guid}
-                showSubmissionId
-              />
-            )}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="lg:col-span-1 flex justify-center"
-          >
-            <IframeFrame
-              guid={guid}
-              type={activeForm}
-              submissionId={activeForm === "liveness" ? submissionId : undefined}
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="lg:col-span-1 max-w-[340px] w-full mx-auto lg:mx-0"
-          >
-            <PostMessageConsole logs={logs} status={status} step={step} />
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-2xl border border-gray-200 bg-white p-6 md:p-8 shadow-sm"
+        >
+          <KycDemoStepper
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            step1Complete={step1Complete}
+            step2Complete={step2Complete}
+            iframeComplete={iframeComplete}
+            sessionValid={sessionValid}
+            configDirty={configDirty}
+            onConfigChange={() => setConfigDirty(true)}
+            step2ContentRef={step2ContentRef}
+            redirectResult={redirectResult}
+            guid={guid}
+            submissionId={submissionId}
+            cpfMasked={cpfMasked}
+            demoMode={demoMode}
+            setDemoMode={setDemoMode}
+            activeForm={activeForm}
+            setActiveForm={setActiveForm}
+            onGuidGenerated={handleGuidGenerated}
+            onReset={handleReset}
+            openRedirectDemo={openRedirectDemo}
+            logs={logs}
+            status={status}
+            step={step}
+          />
+        </motion.div>
       </div>
     </section>
   );
