@@ -11,7 +11,7 @@ interface CpfFormProps {
   onReset?: () => void;
   isProcessStarted?: boolean;
   embedded?: boolean;
-  /** Parâmetros opcionais (webhook, transaction_id) só aparecem no modo redirect */
+  /** Controla textos auxiliares por tipo de demonstração */
   demoMode?: DemoMode;
 }
 
@@ -59,10 +59,8 @@ export function CpfForm({
         transaction_id?: string;
       } = { cpf: cpfDigits };
 
-      if (demoMode === "redirect") {
-        if (webhookUrl.trim()) params.webhook_url = webhookUrl.trim();
-        if (transactionId.trim()) params.transaction_id = transactionId.trim();
-      }
+      if (webhookUrl.trim()) params.webhook_url = webhookUrl.trim();
+      if (transactionId.trim()) params.transaction_id = transactionId.trim();
 
       const data = await mutateAsync(params);
       const guid = data?.onboarding_id || data?.guid;
@@ -120,59 +118,57 @@ export function CpfForm({
           )}
         </div>
 
-        {demoMode === "redirect" && (
-          <div className="rounded-xl border border-gray-200 overflow-hidden">
-            <button
-              type="button"
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              className="w-full flex items-center justify-between gap-2 px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[color:var(--brand-primary)] transition-colors duration-150 cursor-pointer"
-              aria-expanded={showAdvanced}
-              aria-controls="optional-params"
-              id="optional-params-toggle"
-            >
-              <span>Parâmetros opcionais</span>
-              <span className="text-gray-500">{optionalLabel}</span>
-              <Icon
-                icon={showAdvanced ? "tabler:chevron-up" : "tabler:chevron-down"}
-                className="text-lg text-gray-500 shrink-0"
-                aria-hidden
-              />
-            </button>
-            <div
-              id="optional-params"
-              role="region"
-              aria-labelledby="optional-params-toggle"
-              className={showAdvanced ? "border-t border-gray-200 bg-white" : "hidden"}
-            >
-              <div className="p-4 space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Webhook URL <span className="text-gray-400 text-xs">(opcional)</span>
-                  </label>
-                  <input
-                    type="url"
-                    placeholder="https://webhook.site/..."
-                    value={webhookUrl}
-                    onChange={(e) => setWebhookUrl(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Transaction ID <span className="text-gray-400 text-xs">(opcional)</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="GUID"
-                    value={transactionId}
-                    onChange={(e) => setTransactionId(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
-                  />
-                </div>
+        <div className="rounded-xl border border-gray-200 overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="w-full flex items-center justify-between gap-2 px-4 py-3 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[color:var(--brand-primary)] transition-colors duration-150 cursor-pointer"
+            aria-expanded={showAdvanced}
+            aria-controls="optional-params"
+            id="optional-params-toggle"
+          >
+            <span>Parâmetros opcionais</span>
+            <span className="text-gray-500">{optionalLabel}</span>
+            <Icon
+              icon={showAdvanced ? "tabler:chevron-up" : "tabler:chevron-down"}
+              className="text-lg text-gray-500 shrink-0"
+              aria-hidden
+            />
+          </button>
+          <div
+            id="optional-params"
+            role="region"
+            aria-labelledby="optional-params-toggle"
+            className={showAdvanced ? "border-t border-gray-200 bg-white" : "hidden"}
+          >
+            <div className="p-4 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Webhook URL <span className="text-gray-400 text-xs">(opcional)</span>
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://webhook.site/..."
+                  value={webhookUrl}
+                  onChange={(e) => setWebhookUrl(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Transaction ID <span className="text-gray-400 text-xs">(opcional)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="GUID"
+                  value={transactionId}
+                  onChange={(e) => setTransactionId(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
+                />
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {!isProcessStarted ? (
           <motion.button

@@ -1,0 +1,14 @@
+---
+description: kyc-iframe-front-demo implementation standards
+alwaysApply: true
+---
+# Iframe Demo Standards
+
+- Stack: React + TypeScript + Vite + TanStack Router/Query.
+- Keep iframe integration robust: validate allowed origins and avoid unsafe `postMessage` handling.
+- Separate page composition, hooks, and integration utilities as documented in `src/` structure.
+- Prefer deterministic, testable logic in hooks for session and messaging flows.
+- Validate with project scripts:
+  - `npm run dev`
+  - `npm run test`
+  - `npm run build`
