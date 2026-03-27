@@ -1,6 +1,7 @@
 import { CpfForm } from "./CpfForm";
 import { OnboardingIdForm } from "./OnboardingIdForm";
 import { Icon } from "@iconify/react";
+import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
 type FlowType = "onboarding" | "liveness";
@@ -31,6 +32,7 @@ export function StepSessionConfig({
   guid: string | undefined;
   configDirty?: boolean;
 }) {
+  const { t } = useTranslation("demo");
   const handleChangeFlow = (next: FlowType) => {
     if (next === activeForm) return;
     setActiveForm(next);
@@ -40,92 +42,92 @@ export function StepSessionConfig({
     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
       <div>
         <h2 className="text-lg font-semibold text-[color:var(--brand-dark)] mb-1">
-          Iniciar Demonstração KYC
+          {t("config.title")}
         </h2>
         <p className="text-sm text-gray-600">
-          Configure o modo e o tipo de fluxo e gere uma sessão para testar.
+          {t("config.subtitle")}
         </p>
       </div>
 
       <section aria-labelledby="config-heading" className="space-y-4">
         <h3 id="config-heading" className="text-sm font-medium text-gray-700">
-          Configurações
+          {t("config.heading")}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <p className="text-sm font-medium text-gray-700 mb-2">
-              Modo de integração
+              {t("config.integrationMode")}
             </p>
             <div
               className="inline-flex rounded-xl border border-gray-200 p-1 bg-gray-50 cursor-default"
               role="group"
-              aria-label="Modo de integração"
+              aria-label={t("config.integrationModeAria")}
             >
               <button
                 type="button"
                 onClick={() => setDemoMode("iframe")}
                 className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(demoMode === "iframe")}`}
                 aria-pressed={demoMode === "iframe"}
-                aria-label="Embedded (Iframe)"
+                aria-label={t("config.integrationModeOptions.iframe")}
               >
-                Embedded / Iframe
+                {t("config.integrationModeOptions.iframe")}
               </button>
               <button
                 type="button"
                 onClick={() => setDemoMode("redirect")}
                 className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(demoMode === "redirect")}`}
                 aria-pressed={demoMode === "redirect"}
-                aria-label="Redirect (Nova aba)"
+                aria-label={t("config.integrationModeOptions.redirect")}
               >
-                Redirect / Nova aba
+                {t("config.integrationModeOptions.redirect")}
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-1.5">
               {demoMode === "iframe"
-                ? "Abre a verificação aqui na página."
-                : "Abre em outra aba e retorna com parâmetros na URL."}
+                ? t("config.integrationModeHelp.iframe")
+                : t("config.integrationModeHelp.redirect")}
             </p>
           </div>
 
           <div>
             <p className="text-sm font-medium text-gray-700 mb-2">
-              Tipo de fluxo
+              {t("config.flowType")}
             </p>
             <div
               className="inline-flex rounded-xl border border-gray-200 p-1 bg-gray-50 cursor-default"
               role="group"
-              aria-label="Tipo de fluxo"
+              aria-label={t("config.flowTypeAria")}
             >
               <button
                 type="button"
                 onClick={() => handleChangeFlow("onboarding")}
                 className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "onboarding")}`}
                 aria-pressed={activeForm === "onboarding"}
-                aria-label="Novo cadastro"
+                aria-label={t("config.flowTypeOptions.onboarding")}
               >
-                Novo cadastro
+                {t("config.flowTypeOptions.onboarding")}
               </button>
               <button
                 type="button"
                 onClick={() => handleChangeFlow("liveness")}
                 className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "liveness")}`}
                 aria-pressed={activeForm === "liveness"}
-                aria-label="Tenho ID"
+                aria-label={t("config.flowTypeOptions.liveness")}
               >
-                Tenho ID
+                {t("config.flowTypeOptions.liveness")}
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-1.5">
               {activeForm === "onboarding"
-                ? "Inicia um fluxo do zero."
-                : "Continua um fluxo usando identificador existente."}
+                ? t("config.flowTypeHelp.onboarding")
+                : t("config.flowTypeHelp.liveness")}
             </p>
           </div>
         </div>
 
         {guid && (
           <p className="text-xs text-gray-600" role="status">
-            Você já gerou uma sessão. Alterar configurações pode exigir gerar uma nova sessão.
+            {t("config.sessionExistsNotice")}
           </p>
         )}
         {configDirty && (
@@ -134,7 +136,7 @@ export function StepSessionConfig({
             role="alert"
           >
             <Icon icon="tabler:alert-triangle" className="shrink-0 text-amber-600" aria-hidden />
-            Configuração mudou. Gere uma nova sessão para aplicar.
+            {t("config.configDirty")}
           </div>
         )}
       </section>
@@ -162,10 +164,10 @@ export function StepSessionConfig({
           type="button"
           onClick={onReset}
           className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-offset-1 rounded px-1 py-0.5 cursor-pointer transition-colors duration-150"
-          aria-label="Reiniciar demonstração"
+          aria-label={t("config.reset")}
         >
           <Icon icon="tabler:refresh" className="text-base" aria-hidden />
-          Reiniciar demonstração
+          {t("config.resetButton")}
         </button>
       </div>
     </div>

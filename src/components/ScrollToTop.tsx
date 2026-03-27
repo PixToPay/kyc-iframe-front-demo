@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function ScrollToTop() {
+  const { t } = useTranslation("landing");
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -35,10 +37,10 @@ export function ScrollToTop() {
           whileTap={{ scale: 0.95 }}
           onClick={scrollToTop}
           className="fixed bottom-8 right-8 z-50 bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hidden md:flex items-center gap-2 font-medium"
-          aria-label="Voltar ao topo"
+          aria-label={t("scrollToTop.aria")}
         >
           <i className="i-tabler-arrow-up text-lg"></i>
-          <span className="text-sm">Topo</span>
+          <span className="text-sm">{t("scrollToTop.label")}</span>
         </motion.button>
       )}
     </AnimatePresence>

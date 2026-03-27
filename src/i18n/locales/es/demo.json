@@ -1,0 +1,165 @@
+{
+  "section": {
+    "title": "Demostración interactiva",
+    "subtitle": "Flujo guiado en 3 pasos: configura la sesión, inicia la verificación y ve el resultado del retorno."
+  },
+  "stepper": {
+    "aria": { "progress": "Progreso de la demostración de KYC" },
+    "steps": {
+      "config": "Configurar sesión",
+      "start": "Iniciar verificación",
+      "result": "Resultado del retorno"
+    },
+    "ariaStepSuffixDone": ", completado"
+  },
+  "config": {
+    "title": "Iniciar demostración de KYC",
+    "subtitle": "Elige el modo y el tipo de flujo y genera una sesión para probar.",
+    "heading": "Configuraciones",
+    "integrationMode": "Modo de integración",
+    "integrationModeAria": "Modo de integración",
+    "integrationModeOptions": {
+      "iframe": "Embedded / Iframe",
+      "redirect": "Redirect / Nueva pestaña"
+    },
+    "integrationModeHelp": {
+      "iframe": "Abre la verificación aquí en la página.",
+      "redirect": "Abre en otra pestaña y vuelve con parámetros en la URL."
+    },
+    "flowType": "Tipo de flujo",
+    "flowTypeAria": "Tipo de flujo",
+    "flowTypeOptions": {
+      "onboarding": "Nuevo onboarding",
+      "liveness": "Tengo un ID"
+    },
+    "flowTypeHelp": {
+      "onboarding": "Inicia un flujo desde cero.",
+      "liveness": "Continúa un flujo usando un identificador existente."
+    },
+    "sessionExistsNotice": "Ya generaste una sesión. Cambiar configuraciones puede requerir generar una nueva.",
+    "configDirty": "La configuración cambió. Genera una nueva sesión para aplicar.",
+    "reset": "Reiniciar demostración",
+    "resetButton": "Reiniciar demostración"
+  },
+  "start": {
+    "summaryTitle": "Resumen de configuración",
+    "cpfLabel": "CPF:",
+    "modeLabel": "Modo:",
+    "modeValue": { "iframe": "Embedded / Iframe", "redirect": "Redirect / Nueva pestaña" },
+    "flowLabel": "Tipo de flujo:",
+    "flowValue": { "onboarding": "Nuevo onboarding", "liveness": "Tengo un ID" },
+    "sessionId": "Session ID:",
+    "submissionId": "Submission ID:",
+    "iframeEmpty": "Genera una sesión en el paso 1 para habilitar el iframe.",
+    "redirect": {
+      "open": "Abrir verificación en nueva pestaña",
+      "openAria": "Abrir verificación en nueva pestaña",
+      "help": "El KYC se abrirá en otra pestaña. Al finalizar, volverás a esta página con el resultado.",
+      "needSession": "Genera una sesión en el paso 1 para continuar."
+    }
+  },
+  "result": {
+    "panelAria": "Panel de resultado del redirect",
+    "title": "Resultado del retorno",
+    "noneTitle": "Aún no se recibió ningún resultado.",
+    "noneSubtitle": "Finaliza la verificación en el paso 2 para ver el resultado aquí.",
+    "status": {
+      "approved": "Verificación aprobada",
+      "rejected": "Verificación rechazada",
+      "canceled": "Proceso cancelado",
+      "received": "Retorno recibido",
+      "generic": "Resultado: {{result}}"
+    },
+    "copied": "¡Copiado!",
+    "urlParams": "Parámetros de la URL",
+    "view": {
+      "parsed": "Parsed",
+      "raw": "Raw",
+      "parsedAria": "Ver tabla de parámetros",
+      "rawAria": "Ver URL y JSON sin procesar"
+    },
+    "retry": "Hacer de nuevo",
+    "retryAria": "Hacer de nuevo"
+  },
+  "forms": {
+    "cpf": {
+      "title": "Iniciar demostración de KYC",
+      "subtitle": "Ingresa un CPF válido para generar una sesión de demostración",
+      "label": "CPF",
+      "placeholder": "000.000.000-00",
+      "invalid": "CPF inválido",
+      "advanced": "Parámetros opcionales",
+      "optionalFilled_zero": "(0 completados)",
+      "optionalFilled_one": "(1 completado)",
+      "optionalFilled_other": "({{count}} completados)",
+      "webhookUrl": "Webhook URL",
+      "optional": "(opcional)",
+      "webhookPlaceholder": "https://webhook.site/...",
+      "transactionId": "Transaction ID",
+      "transactionPlaceholder": "GUID",
+      "submitIdle": "Generar sesión de KYC",
+      "submitLoading": "Generando sesión...",
+      "started": "Sesión de KYC iniciada",
+      "startOver": "Generar nueva sesión",
+      "tipLabel": "Consejo:",
+      "tipBody": "Usa cualquier CPF válido para probar",
+      "tipExample": "Ejemplo: 111.444.777-35",
+      "startFailed": "No se pudo iniciar la sesión. Inténtalo de nuevo."
+    },
+    "onboardingId": {
+      "title": "Continuar sesión de KYC",
+      "subtitle": "Ingresa el ID de la sesión (GUID) para continuar",
+      "label": "Onboarding ID (GUID)",
+      "placeholder": "Ej: 123e4567-e89b-...",
+      "submissionIdLabel": "Submission ID",
+      "submissionIdPlaceholder": "Ej: 17e2b47e-283a-4f5a-8e0a-...",
+      "submissionIdHelp": "Completa cuando la API devuelva submission_id para armar la URL de liveness (step=6, flow=liveness).",
+      "submitIdle": "Cargar sesión",
+      "submitLoading": "Cargando...",
+      "started": "Sesión cargada",
+      "startOver": "Generar nueva sesión",
+      "embeddedHelp": "Ingresa el ID de la sesión (GUID) para continuar."
+    }
+  },
+  "postMessage": {
+    "title": "Eventos postMessage",
+    "current": "Estado actual:",
+    "step": "Etapa:",
+    "waiting": "Esperando eventos...",
+    "result": {
+      "rejected": "Verificación no aprobada. Puedes intentarlo de nuevo.",
+      "canceled": "Proceso cancelado. Puedes iniciar de nuevo.",
+      "approved": "Verificación aprobada. Puedes iniciar un nuevo proceso."
+    },
+    "retry": "Hacer de nuevo",
+    "retryAria": "Hacer de nuevo"
+  },
+  "redirectPanel": {
+    "title": "Resultado del Redirect",
+    "waiting": "Esperando el retorno de un flujo vía Redirect. Abre el KYC en una nueva pestaña y, al finalizar, volverás aquí con el resultado.",
+    "approved": "Identidad verificada con éxito.",
+    "rejected": "Verificación rechazada.",
+    "canceled": "Proceso cancelado por el usuario.",
+    "generic": "Resultado: {{result}}",
+    "returnUrl": "URL de retorno:",
+    "hint": "En tu aplicación, usa estos parámetros para actualizar el onboarding o continuar el flujo del usuario."
+  },
+  "paramsTable": {
+    "valueFullTitle": "Haz clic para ver el valor completo",
+    "valueFullAria": "Ver valor completo de {{key}}",
+    "close": "Cerrar",
+    "copyValue": "Copiar valor",
+    "copyValueAria": "Copiar valor de {{key}}",
+    "empty": "No hay parámetros de query en la URL.",
+    "copyJsonTitle": "Copiar parámetros como JSON",
+    "copyJson": "Copiar JSON",
+    "copyKeyValueTitle": "Copiar key=value por línea",
+    "copyKeyValue": "Copiar key=value",
+    "headParam": "Parámetro",
+    "headValue": "Valor",
+    "headCopy": "Copiar"
+  },
+  "mobileOnly": {
+    "banner": "El flujo de KYC funciona solo en dispositivos móviles (usa cámara y ubicación). Escanea el QR para abrir en tu celular."
+  }
+}

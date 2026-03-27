@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 export type RedirectResult =
   | { isFromRedirect: false }
   | {
@@ -13,6 +15,7 @@ export function RedirectResultPanel({
 }: {
   redirectResult: RedirectResult;
 }) {
+  const { t } = useTranslation("demo");
   const currentUrl =
     typeof window !== "undefined" ? window.location.href : undefined;
 
@@ -20,11 +23,10 @@ export function RedirectResultPanel({
     return (
       <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 text-left">
         <h4 className="font-semibold text-[color:var(--brand-dark)] text-sm mb-1">
-          Resultado do Redirect
+          {t("redirectPanel.title")}
         </h4>
         <p className="text-xs text-gray-600">
-          Aguardando retorno de um fluxo via Redirect. Abra o KYC em nova aba e,
-          ao finalizar, você voltará aqui com o resultado.
+          {t("redirectPanel.waiting")}
         </p>
       </div>
     );
@@ -48,25 +50,26 @@ export function RedirectResultPanel({
                 : "bg-gray-50 text-gray-700 border border-gray-200"
         }`}
       >
-        {isApproved && <p className="font-medium">Identidade verificada com sucesso.</p>}
+        {isApproved && <p className="font-medium">{t("redirectPanel.approved")}</p>}
         {isRejected && (
           <p className="font-medium">
-            Verificação rejeitada.
+            {t("redirectPanel.rejected")}
             {reason && (
               <span className="block text-xs font-normal mt-1">{reason}</span>
             )}
           </p>
         )}
-        {isCanceled && <p className="font-medium">Processo cancelado pelo usuário.</p>}
+        {isCanceled && <p className="font-medium">{t("redirectPanel.canceled")}</p>}
         {!isApproved && !isRejected && !isCanceled && result && (
-          <p className="font-medium">Resultado: {result}</p>
+          <p className="font-medium">{t("redirectPanel.generic", { result })}</p>
         )}
       </div>
 
       <div className="text-[11px] text-gray-600 space-y-1">
         {currentUrl && (
           <p className="break-all">
-            <span className="font-semibold">URL de retorno:</span> {currentUrl}
+            <span className="font-semibold">{t("redirectPanel.returnUrl")}</span>{" "}
+            {currentUrl}
           </p>
         )}
         {submissionId && (
@@ -87,8 +90,7 @@ export function RedirectResultPanel({
       </div>
 
       <p className="text-[11px] text-gray-500">
-        Na sua aplicação, use esses parâmetros para atualizar o cadastro ou
-        seguir o fluxo do usuário.
+        {t("redirectPanel.hint")}
       </p>
     </div>
   );

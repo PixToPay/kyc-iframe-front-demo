@@ -4,6 +4,7 @@ import { buildKycUrl } from "@/lib/kyc";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import type { RedirectResult } from "./RedirectResultPanel";
+import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
 type FlowType = "onboarding" | "liveness";
@@ -15,9 +16,9 @@ export function DemoSection({
 }: {
   guid?: string;
   redirectResult?: RedirectResult;
-  /** Limpa parâmetros KYC da URL ao reiniciar/gerar nova sessão (evita falso positivo no step Resultado) */
   onClearRedirectResult?: () => void;
 }) {
+  const { t } = useTranslation("demo");
   const [guid, setGuid] = useState<string | undefined>(initialGuid);
   const [submissionId, setSubmissionId] = useState<string | undefined>();
   const [cpfMasked, setCpfMasked] = useState<string | undefined>();
@@ -112,11 +113,10 @@ export function DemoSection({
             id="demo-title"
             className="text-3xl font-bold text-[color:var(--brand-dark)] mb-4"
           >
-            Demonstração Interativa
+            {t("section.title")}
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Fluxo guiado em 3 passos: configure a sessão, inicie a verificação e
-            veja o resultado do retorno.
+            {t("section.subtitle")}
           </p>
         </div>
 

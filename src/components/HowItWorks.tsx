@@ -1,22 +1,19 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function HowItWorks() {
   const [activeTab, setActiveTab] = useState(0);
+  const { t } = useTranslation("landing");
 
   const integrationMethods = [
     {
       id: "api",
-      title: "Integração Direta via API",
-      description: "Use nossa API diretamente no seu sistema",
+      title: t("howItWorks.methods.api.title"),
+      description: t("howItWorks.methods.api.description"),
       icon: "i-tabler-api",
-      features: [
-        "Controle total da interface",
-        "Customização completa do design",
-        "Integração nativa com seu sistema",
-        "Máxima flexibilidade",
-      ],
-      code: `// Exemplo de integração
+      features: t("howItWorks.methods.api.features", { returnObjects: true }) as string[],
+      code: `// Integration example
 const response = await fetch('https://api.dev.pixtopay.com/customer/register', {
   method: 'POST',
   headers: {
@@ -26,45 +23,34 @@ const response = await fetch('https://api.dev.pixtopay.com/customer/register', {
   body: JSON.stringify({
     cpf: '00000000272',
     integration_id: 'GUID',
-    webhook_url: 'https://webhook.site/...', // opcional
-    transaction_id: 'GUID' // opcional
+    webhook_url: 'https://webhook.site/...', // optional
+    transaction_id: 'GUID' // optional
   })
 });
 const { onboarding_id } = await response.json();`,
     },
     {
       id: "iframe",
-      title: "Iframe com PostMessage",
-      description: "Integração rápida via iframe com eventos em tempo real",
+      title: t("howItWorks.methods.iframe.title"),
+      description: t("howItWorks.methods.iframe.description"),
       icon: "i-tabler-device-mobile",
-      features: [
-        "Implementação em minutos",
-        "Eventos postMessage em tempo real",
-        "Interface pré-construída",
-        "Fácil manutenção",
-      ],
-      code: `// Configuração do iframe
+      features: t("howItWorks.methods.iframe.features", { returnObjects: true }) as string[],
+      code: `// Iframe setup
 <iframe 
   src="https://kyc.pixtopay.com/?guid=123"
   onMessage={(event) => {
     if (event.data.type === 'stepUpdate') {
-      console.log('Etapa:', event.data.step);
+      console.log('Step:', event.data.step);
     }
   }}
 />`,
     },
     {
       id: "redirect",
-      title: "Redirect (URL Externa)",
-      description:
-        "Envie o usuário direto para a página de KYC e receba o resultado via redirect na sua URL. Ideal para mobile, webview e fluxos fora do seu domínio.",
+      title: t("howItWorks.methods.redirect.title"),
+      description: t("howItWorks.methods.redirect.description"),
       icon: "i-tabler-external-link",
-      features: [
-        "Navegação full-page ou nova aba",
-        "Retorno via querystring na redirectUrl",
-        "Ideal para apps mobile (webview) e links diretos",
-        "Fallback para postMessage se a URL for inválida",
-      ],
+      features: t("howItWorks.methods.redirect.features", { returnObjects: true }) as string[],
       code: `const url = new URL("https://kyc-front.pixtopay.com.br/");
 url.searchParams.set("guid", guid);
 url.searchParams.set("redirectUrl", "https://meuapp.com/callback/kyc");
@@ -73,15 +59,10 @@ window.open(url.toString(), "_blank");`,
     },
     {
       id: "dashboard",
-      title: "Dashboard de Gerenciamento",
-      description: "Controle completo via backoffice da PixtoPay",
+      title: t("howItWorks.methods.dashboard.title"),
+      description: t("howItWorks.methods.dashboard.description"),
       icon: "i-tabler-chart-dots",
-      features: [
-        "Relatórios em tempo real",
-        "Gestão de verificações",
-        "Análise de conversão",
-        "Configurações avançadas",
-      ],
+      features: t("howItWorks.methods.dashboard.features", { returnObjects: true }) as string[],
       code: `// Acesso ao dashboard
 https://backoffice.pixtopay.com.br/plataforma/`,
     },
@@ -90,20 +71,20 @@ https://backoffice.pixtopay.com.br/plataforma/`,
   const steps = [
     {
       icon: "i-tabler-user-plus",
-      title: "Usuário inicia verificação",
-      description: "Captura de documentos e selfie com biometria facial",
+      title: t("howItWorks.steps.0.title"),
+      description: t("howItWorks.steps.0.description"),
       image: "/assets/images/step1-document.svg",
     },
     {
       icon: "i-tabler-shield-check",
-      title: "Análise automática",
-      description: "IA verifica autenticidade e similaridade facial",
+      title: t("howItWorks.steps.1.title"),
+      description: t("howItWorks.steps.1.description"),
       image: "/assets/images/step2-analysis.svg",
     },
     {
       icon: "i-tabler-chart-line",
-      title: "Resultados no dashboard",
-      description: "Status, métricas e dados de compliance em tempo real",
+      title: t("howItWorks.steps.2.title"),
+      description: t("howItWorks.steps.2.description"),
       image: "/assets/images/step3-results.svg",
     },
   ];
@@ -113,11 +94,10 @@ https://backoffice.pixtopay.com.br/plataforma/`,
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-[color:var(--brand-dark)] mb-4">
-            Como funciona
+            {t("howItWorks.title")}
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Quatro formas de integrar o KYC PixtoPay ao seu sistema, desde
-            implementação rápida até controle total.
+            {t("howItWorks.subtitle")}
           </p>
         </div>
 
@@ -141,20 +121,18 @@ https://backoffice.pixtopay.com.br/plataforma/`,
           <div className="grid sm:grid-cols-2 gap-4 mb-8 max-w-3xl mx-auto">
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
               <h4 className="font-semibold text-[color:var(--brand-dark)] text-sm mb-2">
-                Embedded (Iframe)
+                {t("howItWorks.quickCards.embeddedTitle")}
               </h4>
               <p className="text-xs text-gray-600">
-                Usuário na sua página. Resultado via postMessage em tempo real.
-                Recomendado para portais web e SPAs.
+                {t("howItWorks.quickCards.embeddedBody")}
               </p>
             </div>
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
               <h4 className="font-semibold text-[color:var(--brand-dark)] text-sm mb-2">
-                Redirect (URL externa)
+                {t("howItWorks.quickCards.redirectTitle")}
               </h4>
               <p className="text-xs text-gray-600">
-                KYC em nova aba ou webview. Resultado na querystring da
-                redirectUrl. Ideal para mobile e links diretos.
+                {t("howItWorks.quickCards.redirectBody")}
               </p>
             </div>
           </div>
@@ -194,7 +172,7 @@ https://backoffice.pixtopay.com.br/plataforma/`,
                     target="_blank"
                     className="inline-flex items-center gap-2 bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] px-4 py-2 rounded-lg font-medium hover:opacity-90 transition"
                   >
-                    Acessar Dashboard
+                    {t("howItWorks.methods.dashboard.cta")}
                     <i className="i-tabler-external-link"></i>
                   </a>
                 )}

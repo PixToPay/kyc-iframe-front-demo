@@ -2,14 +2,7 @@ import { motion } from "framer-motion";
 import clsx from "classnames";
 import { Icon } from "@iconify/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-
-/**
- * Ajustes principais:
- * - Layout baseado em grid fluido (2 linhas no desktop).
- * - Linha conectora animada entre etapas (quebra entre fileiras).
- * - Cards mais compactos (melhor legibilidade e ritmo visual).
- * - Mantém todos os dados e ícones do fluxo original.
- */
+import { useTranslation } from "react-i18next";
 
 type Step = {
   id: number;
@@ -23,98 +16,19 @@ type Step = {
   linkHref?: string;
 };
 
-const STEPS: Step[] = [
-  {
-    id: 1,
-    title: "Gerar integração",
-    subtitle: "Crie sua Public Key e configure domínios",
-    icon: "tabler:key",
-    badge: "Segurança",
-    highlights: [
-      "Gere Public Key no backoffice",
-      "Defina CORS e origens permitidas",
-    ],
-    code: `'x-public-key': '<SUA_PUBLIC_KEY>'`,
-    linkLabel: "Documentação de chaves",
-    linkHref: "#",
-  },
-  {
-    id: 2,
-    title: "Criar sessão (register)",
-    subtitle: "CPF → GUID para onboarding ou liveness",
-    icon: "tabler:cursor-text",
-    badge: "API",
-    highlights: [
-      "Envie CPF e integration_id",
-      "Parâmetros opcionais: webhook_url, transaction_id",
-      "Receba GUID e validade da sessão",
-    ],
-    code: `POST /customer/register
+const STEP_CODES: Record<number, string | undefined> = {
+  1: `'x-public-key': '<SUA_PUBLIC_KEY>'`,
+  2: `POST /customer/register
 {
   "cpf": "00000000272",
   "integration_id": "...",
-  "webhook_url": "https://...", // opcional
-  "transaction_id": "..." // opcional
+  "webhook_url": "https://...", // optional
+  "transaction_id": "..." // optional
 } -> { onboarding_id }`,
-  },
-  {
-    id: 3,
-    title: "Abrir o fluxo de verificação",
-    subtitle: "Iframe (embedded) ou redirect em nova aba",
-    icon: "tabler:link",
-    badge: "Iframe / Redirect",
-    highlights: [
-      "Iframe: carregue o link com allow camera; geolocation",
-      "Redirect: passe redirectUrl e state na URL do KYC",
-      "Sem iframe o resultado vem pela URL de callback",
-    ],
-    code: `<iframe src=".../?guid=UUID&step=1" allow="camera; geolocation" />`,
-  },
-  {
-    id: 4,
-    title: "Usuário realiza verificação",
-    subtitle: "Documento + selfie (mobile)",
-    icon: "tabler:device-mobile",
-    badge: "Mobile",
-    highlights: [
-      "Qualidade e foco automático",
-      "Compressão otimizada de imagens",
-    ],
-  },
-  {
-    id: 5,
-    title: "Validações automáticas",
-    subtitle: "OCR, similaridade e compliance",
-    icon: "tabler:checks",
-    highlights: ["Face-match ≥ threshold do tenant", "PEP e sanções checadas"],
-    code: `{ status: 'approved', similarity: 0.99 }`,
-  },
-  {
-    id: 6,
-    title: "Eventos em tempo real",
-    subtitle: "Acompanhe via postMessage",
-    icon: "tabler:message-dots",
-    badge: "Eventos",
-    highlights: [
-      "type: 'stepUpdate' (1–8)",
-      "type: 'processCompleted' (status)",
-    ],
-    code: `window.addEventListener('message', e => console.log(e.data))`,
-  },
-  {
-    id: 7,
-    title: "Resultados & auditoria",
-    subtitle: "Dashboard PixtoPay",
-    icon: "tabler:chart-dots",
-    badge: "Dashboard",
-    highlights: [
-      "Status e métricas em tempo real",
-      "Trilha de auditoria completa",
-    ],
-    linkLabel: "Acessar Dashboard",
-    linkHref: "https://backoffice.pixtopay.com.br/plataforma/",
-  },
-];
+  3: `<iframe src=".../?guid=UUID&step=1" allow="camera; geolocation" />`,
+  5: `{ status: 'approved', similarity: 0.99 }`,
+  6: `window.addEventListener('message', e => console.log(e.data))`,
+};
 
 function StepCard({ step }: { step: Step }) {
   return (
@@ -125,7 +39,6 @@ function StepCard({ step }: { step: Step }) {
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
     >
-      {/* Header */}
       <div className="flex items-center gap-2 mb-2">
         <span className="w-10 h-10 rounded-full bg-[color:var(--brand-primary)]/15 border-2 border-[color:var(--brand-primary)] flex items-center justify-center">
           <Icon
@@ -146,7 +59,6 @@ function StepCard({ step }: { step: Step }) {
         {step.subtitle}
       </p>
 
-      {/* Highlights */}
       {step.highlights && (
         <ul className="text-xs text-gray-700 space-y-1 mb-3">
           {step.highlights.map((h, i) => (
@@ -161,14 +73,12 @@ function StepCard({ step }: { step: Step }) {
         </ul>
       )}
 
-      {/* Code */}
       {step.code && (
         <pre className="text-[11px] bg-slate-900 text-emerald-300 p-3 rounded-md overflow-hidden whitespace-pre-wrap break-words border border-slate-800 shadow-[0_5px_20px_rgba(2,6,23,0.25)]">
           {`${step.code}`}
         </pre>
       )}
 
-      {/* Link */}
       {step.linkHref && (
         <a
           href={step.linkHref}
@@ -291,31 +201,97 @@ function FlowConnectors({
 }
 
 export function EndToEndFlow() {
+  const { t } = useTranslation("landing");
   const anchorsRef = useRef<Array<HTMLDivElement | null>>([]);
+  const steps: Step[] = useMemo(
+    () => [
+      {
+        id: 1,
+        title: t("flow.steps.1.title"),
+        subtitle: t("flow.steps.1.subtitle"),
+        icon: "tabler:key",
+        badge: t("flow.steps.1.badge"),
+        highlights: t("flow.steps.1.highlights", { returnObjects: true }) as string[],
+        code: STEP_CODES[1],
+        linkLabel: t("flow.steps.1.linkLabel"),
+        linkHref: "#",
+      },
+      {
+        id: 2,
+        title: t("flow.steps.2.title"),
+        subtitle: t("flow.steps.2.subtitle"),
+        icon: "tabler:cursor-text",
+        badge: t("flow.steps.2.badge"),
+        highlights: t("flow.steps.2.highlights", { returnObjects: true }) as string[],
+        code: STEP_CODES[2],
+      },
+      {
+        id: 3,
+        title: t("flow.steps.3.title"),
+        subtitle: t("flow.steps.3.subtitle"),
+        icon: "tabler:link",
+        badge: t("flow.steps.3.badge"),
+        highlights: t("flow.steps.3.highlights", { returnObjects: true }) as string[],
+        code: STEP_CODES[3],
+      },
+      {
+        id: 4,
+        title: t("flow.steps.4.title"),
+        subtitle: t("flow.steps.4.subtitle"),
+        icon: "tabler:device-mobile",
+        badge: t("flow.steps.4.badge"),
+        highlights: t("flow.steps.4.highlights", { returnObjects: true }) as string[],
+      },
+      {
+        id: 5,
+        title: t("flow.steps.5.title"),
+        subtitle: t("flow.steps.5.subtitle"),
+        icon: "tabler:checks",
+        highlights: t("flow.steps.5.highlights", { returnObjects: true }) as string[],
+        code: STEP_CODES[5],
+      },
+      {
+        id: 6,
+        title: t("flow.steps.6.title"),
+        subtitle: t("flow.steps.6.subtitle"),
+        icon: "tabler:message-dots",
+        badge: t("flow.steps.6.badge"),
+        highlights: t("flow.steps.6.highlights", { returnObjects: true }) as string[],
+        code: STEP_CODES[6],
+      },
+      {
+        id: 7,
+        title: t("flow.steps.7.title"),
+        subtitle: t("flow.steps.7.subtitle"),
+        icon: "tabler:chart-dots",
+        badge: t("flow.steps.7.badge"),
+        highlights: t("flow.steps.7.highlights", { returnObjects: true }) as string[],
+        linkLabel: t("flow.steps.7.linkLabel"),
+        linkHref: "https://backoffice.pixtopay.com.br/plataforma/",
+      },
+    ],
+    [t]
+  );
   return (
     <section id="flow" className="py-16 bg-[color:var(--brand-bg)]">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-[color:var(--brand-dark)]">
-            Fluxo do Processo KYC — visão completa
+            {t("flow.title")}
           </h2>
           <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-            Da integração ao resultado final — tudo conectado em um fluxo
-            contínuo e simples de operar.
+            {t("flow.subtitle")}
           </p>
         </div>
 
-        {/* GRID FLEXÍVEL - 2 colunas fixas no desktop/tablet (cards largos) com conectores SVG */}
         <div className="relative hidden sm:block">
           <div className="grid gap-10 sm:grid-cols-2 relative z-10">
-            {STEPS.map((step, idx) => (
+            {steps.map((step, idx) => (
               <div
                 key={step.id}
                 ref={(el) => (anchorsRef.current[idx] = el)}
                 className="relative z-10"
               >
-                {/* Nó esquerdo */}
                 <div
                   className="absolute top-1/2 -left-2 w-3 h-3 rounded-full bg-white border border-gray-300"
                   aria-hidden="true"
@@ -324,24 +300,21 @@ export function EndToEndFlow() {
               </div>
             ))}
           </div>
-          {/* SVG overlay atrás dos cards */}
           <div className="absolute inset-0 z-0">
             <FlowConnectors anchors={anchorsRef.current} />
           </div>
         </div>
 
-        {/* TIMELINE VERTICAL - MOBILE */}
         <div className="sm:hidden relative pl-6 mt-2">
           <div className="absolute left-3 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-[color:var(--brand-primary)] to-[color:var(--kyc-accent)]" />
           <div className="space-y-4">
-            {STEPS.map((s, i) => (
+            {steps.map((s, i) => (
               <div key={s.id} className="relative">
                 <div
                   className="absolute -left-3 top-4 w-4 h-4 rounded-full border-2 bg-white border-gray-300"
                   aria-hidden="true"
                 />
-                {/* Segmento de conexão para o próximo card */}
-                {i < STEPS.length - 1 && (
+                {i < steps.length - 1 && (
                   <div
                     className="absolute left-3 top-8 bottom-[-8px] w-1 bg-gray-200"
                     aria-hidden="true"
@@ -353,17 +326,15 @@ export function EndToEndFlow() {
           </div>
         </div>
 
-        {/* CTA */}
         <div className="mt-12 text-center">
           <a
             href="#demo"
             className="inline-flex items-center gap-2 bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] font-semibold px-6 py-3 rounded-lg shadow hover:shadow-lg transition"
           >
-            Ver demonstração (iframe e redirect) <Icon icon="tabler:arrow-right" />
+            {t("flow.cta")} <Icon icon="tabler:arrow-right" />
           </a>
           <p className="text-xs text-gray-500 mt-3">
-            * Recomendado executar a verificação no celular (acesso à câmera e
-            localização).
+            {t("flow.ctaSuffix")}
           </p>
         </div>
       </div>

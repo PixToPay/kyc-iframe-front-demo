@@ -4,19 +4,20 @@ import { StepSessionConfig } from "./StepSessionConfig";
 import { StepStartFlow } from "./StepStartFlow";
 import { StepResult } from "./StepResult";
 import type { RedirectResult } from "./RedirectResultPanel";
+import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
 type FlowType = "onboarding" | "liveness";
 
 const STEPS_IFRAME = [
-  { id: 0, label: "Configurar sessão" },
-  { id: 1, label: "Iniciar verificação" },
+  { id: 0, key: "config" },
+  { id: 1, key: "start" },
 ] as const;
 
 const STEPS_REDIRECT = [
-  { id: 0, label: "Configurar sessão" },
-  { id: 1, label: "Iniciar verificação" },
-  { id: 2, label: "Resultado do retorno" },
+  { id: 0, key: "config" },
+  { id: 1, key: "start" },
+  { id: 2, key: "result" },
 ] as const;
 
 export function KycDemoStepper({
@@ -68,6 +69,7 @@ export function KycDemoStepper({
   status?: string;
   step?: number;
 }) {
+  const { t } = useTranslation("demo");
   const resultPanelRef = useRef<HTMLDivElement>(null);
   const isIframe = demoMode === "iframe";
   const steps = isIframe ? STEPS_IFRAME : STEPS_REDIRECT;
@@ -94,9 +96,10 @@ export function KycDemoStepper({
     <div className="space-y-8">
       <nav
         className="flex flex-wrap items-center gap-2 sm:gap-4"
-        aria-label="Progresso da demonstração KYC"
+        aria-label={t("stepper.aria.progress")}
       >
         {steps.map((s, i) => {
+          const label = t(`stepper.steps.${s.key}`);
           const completed = isStepCompleted(s.id);
           const current = activeStep === s.id;
           const clickable = canGoTo(s.id);
@@ -117,7 +120,7 @@ export function KycDemoStepper({
                         : "bg-gray-50 text-gray-400 cursor-not-allowed"
                 }`}
                 aria-current={current ? "step" : undefined}
-                aria-label={`${s.label}${completed ? ", concluído" : ""}`}
+                aria-label={`${label}${completed ? t("stepper.ariaStepSuffixDone") : ""}`}
               >
                 <span
                   className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${
@@ -135,7 +138,7 @@ export function KycDemoStepper({
                     s.id + 1
                   )}
                 </span>
-                {s.label}
+                {label}
               </button>
               {i < steps.length - 1 && (
                 <span

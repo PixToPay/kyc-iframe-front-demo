@@ -1,6 +1,7 @@
 import { IframeFrame } from "./IframeFrame";
 import { PostMessageConsole } from "./PostMessageConsole";
 import { Icon } from "@iconify/react";
+import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
 type FlowType = "onboarding" | "liveness";
@@ -36,37 +37,42 @@ export function StepStartFlow({
   status?: string;
   step?: number;
 }) {
+  const { t } = useTranslation("demo");
   const hasSession = sessionValid;
 
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
         <p className="text-sm font-medium text-gray-700 mb-2">
-          Resumo da configuração
+          {t("start.summaryTitle")}
         </p>
         <ul className="text-sm text-gray-600 space-y-1" role="list">
           {activeForm === "onboarding" && (
             <li>
-              <span className="font-medium">CPF:</span>{" "}
+              <span className="font-medium">{t("start.cpfLabel")}</span>{" "}
               {cpfMasked ? maskCpf(cpfMasked) : "—"}
             </li>
           )}
           <li>
-            <span className="font-medium">Modo:</span>{" "}
-            {demoMode === "iframe" ? "Embedded / Iframe" : "Redirect / Nova aba"}
+            <span className="font-medium">{t("start.modeLabel")}</span>{" "}
+            {demoMode === "iframe"
+              ? t("start.modeValue.iframe")
+              : t("start.modeValue.redirect")}
           </li>
           <li>
-            <span className="font-medium">Tipo de fluxo:</span>{" "}
-            {activeForm === "onboarding" ? "Novo cadastro" : "Tenho ID"}
+            <span className="font-medium">{t("start.flowLabel")}</span>{" "}
+            {activeForm === "onboarding"
+              ? t("start.flowValue.onboarding")
+              : t("start.flowValue.liveness")}
           </li>
           {guid && (
             <li className="font-mono text-xs break-all">
-              <span className="font-medium">Session ID:</span> {guid}
+              <span className="font-medium">{t("start.sessionId")}</span> {guid}
             </li>
           )}
           {submissionId && (
             <li className="font-mono text-xs break-all">
-              <span className="font-medium">Submission ID:</span> {submissionId}
+              <span className="font-medium">{t("start.submissionId")}</span> {submissionId}
             </li>
           )}
         </ul>
@@ -89,7 +95,7 @@ export function StepStartFlow({
                   aria-hidden
                 />
                 <p className="text-sm text-gray-600">
-                  Gere uma sessão no passo 1 para habilitar o iframe.
+                  {t("start.iframeEmpty")}
                 </p>
               </div>
             )}
@@ -111,20 +117,19 @@ export function StepStartFlow({
                 type="button"
                 onClick={openRedirectDemo}
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[color:var(--brand-primary)] px-4 py-3 text-sm font-semibold text-[color:var(--brand-dark)] hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-offset-2 transition"
-                aria-label="Abrir verificação em nova aba"
+                aria-label={t("start.redirect.openAria")}
               >
                 <Icon icon="tabler:external-link" aria-hidden />
-                Abrir verificação em nova aba
+                {t("start.redirect.open")}
               </button>
               <p className="text-sm text-gray-500">
-                O KYC abrirá em outra aba. Ao finalizar, você voltará para esta
-                página com o resultado.
+                {t("start.redirect.help")}
               </p>
             </div>
           ) : (
             <>
               <p className="text-sm text-gray-600 mb-3">
-                Gere uma sessão no passo 1 para continuar.
+                {t("start.redirect.needSession")}
               </p>
               <button
                 type="button"
@@ -133,7 +138,7 @@ export function StepStartFlow({
                 aria-disabled="true"
               >
                 <Icon icon="tabler:external-link" aria-hidden />
-                Abrir verificação em nova aba
+                {t("start.redirect.open")}
               </button>
             </>
           )}
