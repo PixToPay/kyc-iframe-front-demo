@@ -1,0 +1,174 @@
+{
+  "header": {
+    "nav": {
+      "howItWorks": { "desktop": "Cómo funciona", "mobile": "Cómo" },
+      "demo": { "desktop": "Demostración →", "mobile": "Demo →" }
+    },
+    "language": {
+      "label": "Idioma",
+      "ptBR": "Portugués (Brasil)",
+      "en": "Inglés",
+      "es": "Español"
+    }
+  },
+  "hero": {
+    "title": "Mira cómo el KYC de PixtoPay puede integrarse en tu sistema en minutos.",
+    "subtitle": "Demostración interactiva de verificación de identidad vía iframe — con reconocimiento facial, documentos y compliance automatizado.",
+    "cta": "Iniciar demostración"
+  },
+  "howItWorks": {
+    "title": "Cómo funciona",
+    "subtitle": "Cuatro formas de integrar PixtoPay KYC en tu sistema, desde una implementación rápida hasta control total.",
+    "quickCards": {
+      "embeddedTitle": "Embedded (Iframe)",
+      "embeddedBody": "El usuario permanece en tu página. Resultado vía postMessage en tiempo real. Recomendado para portales web y SPAs.",
+      "redirectTitle": "Redirect (URL externa)",
+      "redirectBody": "El KYC se abre en una nueva pestaña o webview. El resultado vuelve en la querystring de redirectUrl. Ideal para móvil y enlaces directos."
+    },
+    "methods": {
+      "api": {
+        "title": "Integración directa vía API",
+        "description": "Usa nuestra API directamente en tu sistema",
+        "features": [
+          "Control total de la interfaz",
+          "Personalización completa del diseño",
+          "Integración nativa con tu sistema",
+          "Máxima flexibilidad"
+        ],
+        "codeTitle": "Ejemplo de integración"
+      },
+      "iframe": {
+        "title": "Iframe con PostMessage",
+        "description": "Integración rápida vía iframe con eventos en tiempo real",
+        "features": [
+          "Implementación en minutos",
+          "Eventos postMessage en tiempo real",
+          "Interfaz preconstruida",
+          "Mantenimiento fácil"
+        ],
+        "codeTitle": "Configuración del iframe"
+      },
+      "redirect": {
+        "title": "Redirect (URL externa)",
+        "description": "Envía al usuario directamente a la página de KYC y recibe el resultado mediante redirect a tu URL. Ideal para móvil, webview y flujos fuera de tu dominio.",
+        "features": [
+          "Navegación a página completa o nueva pestaña",
+          "Retorno vía querystring en redirectUrl",
+          "Ideal para apps móviles (webview) y enlaces directos",
+          "Fallback a postMessage si la URL es inválida"
+        ]
+      },
+      "dashboard": {
+        "title": "Dashboard de gestión",
+        "description": "Control completo vía backoffice de PixtoPay",
+        "features": [
+          "Informes en tiempo real",
+          "Gestión de verificaciones",
+          "Análisis de conversión",
+          "Configuraciones avanzadas"
+        ],
+        "cta": "Abrir dashboard",
+        "codeTitle": "Acceso al dashboard"
+      }
+    },
+    "steps": {
+      "0": {
+        "title": "El usuario inicia la verificación",
+        "description": "Captura de documentos y selfie con biometría facial"
+      },
+      "1": {
+        "title": "Análisis automático",
+        "description": "La IA verifica autenticidad y similitud facial"
+      },
+      "2": {
+        "title": "Resultados en el dashboard",
+        "description": "Estado, métricas y datos de compliance en tiempo real"
+      }
+    }
+  },
+  "flow": {
+    "title": "Flujo del proceso KYC — visión completa",
+    "subtitle": "Desde la integración hasta el resultado final — todo conectado en un flujo continuo y fácil de operar.",
+    "cta": "Ver demostración (iframe y redirect)",
+    "ctaSuffix": "* Recomendamos realizar la verificación en el celular (acceso a cámara y ubicación).",
+    "steps": {
+      "1": {
+        "title": "Crear integración",
+        "subtitle": "Genera tu Public Key y configura dominios",
+        "badge": "Seguridad",
+        "highlights": [
+          "Genera la Public Key en el backoffice",
+          "Define CORS y orígenes permitidos"
+        ],
+        "linkLabel": "Documentación de claves"
+      },
+      "2": {
+        "title": "Crear sesión (register)",
+        "subtitle": "CPF → GUID para onboarding o liveness",
+        "badge": "API",
+        "highlights": [
+          "Envía CPF e integration_id",
+          "Parámetros opcionales: webhook_url, transaction_id",
+          "Recibe GUID y validez de la sesión"
+        ]
+      },
+      "3": {
+        "title": "Abrir el flujo de verificación",
+        "subtitle": "Iframe (embedded) o redirect en nueva pestaña",
+        "badge": "Iframe / Redirect",
+        "highlights": [
+          "Iframe: carga el enlace con allow camera; geolocation",
+          "Redirect: pasa redirectUrl y state en la URL del KYC",
+          "Sin iframe el resultado vuelve por la URL de callback"
+        ]
+      },
+      "4": {
+        "title": "El usuario completa la verificación",
+        "subtitle": "Documento + selfie (móvil)",
+        "badge": "Móvil",
+        "highlights": [
+          "Calidad y enfoque automáticos",
+          "Compresión optimizada de imágenes"
+        ]
+      },
+      "5": {
+        "title": "Validaciones automáticas",
+        "subtitle": "OCR, similitud y compliance",
+        "highlights": [
+          "Face-match ≥ umbral del tenant",
+          "PEP y sanciones verificadas"
+        ]
+      },
+      "6": {
+        "title": "Eventos en tiempo real",
+        "subtitle": "Sigue el flujo vía postMessage",
+        "badge": "Eventos",
+        "highlights": [
+          "type: 'stepUpdate' (1–8)",
+          "type: 'processCompleted' (status)"
+        ]
+      },
+      "7": {
+        "title": "Resultados y auditoría",
+        "subtitle": "Dashboard de PixtoPay",
+        "badge": "Dashboard",
+        "highlights": [
+          "Estado y métricas en tiempo real",
+          "Trazabilidad completa de auditoría"
+        ],
+        "linkLabel": "Abrir dashboard"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Solución completa de verificación de identidad para fintechs y empresas.",
+    "developers": "Desarrolladores",
+    "support": "Soporte",
+    "links": { "docs": "Documentación", "sdks": "SDKs", "examples": "Ejemplos", "dashboard": "Dashboard" },
+    "rights": "Todos los derechos reservados."
+  },
+  "scrollToTop": {
+    "aria": "Volver arriba",
+    "label": "Arriba"
+  }
+}

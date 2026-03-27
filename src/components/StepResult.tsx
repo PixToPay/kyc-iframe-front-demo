@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import { ReturnUrlBox } from "./ReturnUrlBox";
 import { QueryParamsTable } from "./QueryParamsTable";
 import type { RedirectResult } from "./RedirectResultPanel";
+import { useTranslation } from "react-i18next";
 
 function CopyToast({
   show,
@@ -23,18 +24,11 @@ function CopyToast({
   );
 }
 
-function getStatusConfig(result?: string): {
-  variant: "success" | "error" | "warning" | "info";
-  label: string;
-} {
-  if (result === "approved")
-    return { variant: "success", label: "Verificação aprovada" };
-  if (result === "rejected")
-    return { variant: "error", label: "Verificação rejeitada" };
-  if (result === "canceled")
-    return { variant: "warning", label: "Processo cancelado" };
-  if (result) return { variant: "info", label: `Resultado: ${result}` };
-  return { variant: "info", label: "Retorno recebido" };
+function getStatusVariant(result?: string): "success" | "error" | "warning" | "info" {
+  if (result === "approved") return "success";
+  if (result === "rejected") return "error";
+  if (result === "canceled") return "warning";
+  return "info";
 }
 
 const chipClass = {
@@ -53,6 +47,7 @@ export function StepResult({
   resultPanelRef?: React.RefObject<HTMLDivElement | null>;
   onStartOver?: () => void;
 }) {
+  const { t } = useTranslation("demo");
   const [viewMode, setViewMode] = useState<"parsed" | "raw">("parsed");
   const [toast, setToast] = useState({ show: false, message: "" });
   const resultPanelRefInner = useRef<HTMLDivElement>(null);
@@ -83,10 +78,10 @@ export function StepResult({
         tabIndex={-1}
       >
         <p className="text-gray-600 mb-1">
-          Nenhum resultado recebido ainda.
+          {t("result.noneTitle")}
         </p>
         <p className="text-sm text-gray-500">
-          Conclua a verificação no passo 2 para ver o resultado aqui.
+          {t("result.noneSubtitle")}
         </p>
         <CopyToast show={toast.show} message={toast.message} />
       </div>
@@ -94,27 +89,37 @@ export function StepResult({
   }
 
   const { result, reason } = redirectResult;
-  const status = getStatusConfig(result);
+  const variant = getStatusVariant(result);
+  const statusLabel =
+    result === "approved"
+      ? t("result.status.approved")
+      : result === "rejected"
+        ? t("result.status.rejected")
+        : result === "canceled"
+          ? t("result.status.canceled")
+          : result
+            ? t("result.status.generic", { result })
+            : t("result.status.received");
 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className="rounded-xl border border-gray-200 bg-white px-4 py-5 md:px-6 md:py-6 flex flex-col gap-0 transition-colors duration-150"
       tabIndex={-1}
-      aria-label="Painel de resultado do redirect"
+      aria-label={t("result.panelAria")}
     >
       <CopyToast show={toast.show} message={toast.message} />
 
       <header className="flex flex-col gap-2 pb-4">
         <h3 className="text-lg font-semibold text-[color:var(--brand-dark)]">
-          Resultado do retorno
+          {t("result.title")}
         </h3>
         <div className="flex flex-wrap items-center gap-2">
           <span
-            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${chipClass[status.variant]}`}
+            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${chipClass[variant]}`}
             role="status"
           >
-            {status.label}
+            {statusLabel}
           </span>
           {reason && result === "rejected" && (
             <span className="text-xs text-gray-600">{reason}</span>
@@ -125,14 +130,14 @@ export function StepResult({
       <div className="border-t border-gray-200 pt-4 flex flex-col gap-4">
         <ReturnUrlBox
           url={typeof window !== "undefined" ? window.location.href : ""}
-          onCopy={() => showToast("Copiado!")}
+          onCopy={() => showToast(t("result.copied"))}
         />
       </div>
 
       <div className="border-t border-gray-200 pt-4 flex flex-col gap-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <label className="text-xs font-medium text-gray-600">
-            Parâmetros da URL
+            {t("result.urlParams")}
           </label>
           <div className="flex rounded-md border border-gray-200 p-0.5 bg-gray-50 w-fit">
             <button
@@ -144,9 +149,9 @@ export function StepResult({
                   : "text-gray-600 hover:text-gray-800"
               }`}
               aria-pressed={viewMode === "parsed"}
-              aria-label="Ver tabela de parâmetros"
+              aria-label={t("result.view.parsedAria")}
             >
-              Parsed
+              {t("result.view.parsed")}
             </button>
             <button
               type="button"
@@ -157,16 +162,16 @@ export function StepResult({
                   : "text-gray-600 hover:text-gray-800"
               }`}
               aria-pressed={viewMode === "raw"}
-              aria-label="Ver URL e JSON brutos"
+              aria-label={t("result.view.rawAria")}
             >
-              Raw
+              {t("result.view.raw")}
             </button>
           </div>
         </div>
         <QueryParamsTable
           url={typeof window !== "undefined" ? window.location.href : ""}
           viewMode={viewMode}
-          onCopy={() => showToast("Copiado!")}
+          onCopy={() => showToast(t("result.copied"))}
         />
       </div>
 
@@ -178,10 +183,10 @@ export function StepResult({
               type="button"
               onClick={onStartOver}
               className="w-full inline-flex items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-offset-2 transition-colors duration-150 cursor-pointer"
-              aria-label="Fazer novamente"
+              aria-label={t("result.retryAria")}
             >
               <Icon icon="tabler:refresh" className="w-4 h-4" aria-hidden />
-              Fazer novamente
+              {t("result.retry")}
             </button>
           </div>
         </>

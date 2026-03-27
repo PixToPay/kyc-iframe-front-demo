@@ -1,0 +1,174 @@
+{
+  "header": {
+    "nav": {
+      "howItWorks": { "desktop": "Como Funciona", "mobile": "Como" },
+      "demo": { "desktop": "Demonstração →", "mobile": "Demo →" }
+    },
+    "language": {
+      "label": "Idioma",
+      "ptBR": "Português (Brasil)",
+      "en": "English",
+      "es": "Español"
+    }
+  },
+  "hero": {
+    "title": "Veja como o KYC da PixtoPay pode ser integrado ao seu sistema em minutos.",
+    "subtitle": "Demonstração interativa de verificação de identidade via iframe — com reconhecimento facial, documentos e compliance automatizados.",
+    "cta": "Iniciar Demonstração"
+  },
+  "howItWorks": {
+    "title": "Como funciona",
+    "subtitle": "Quatro formas de integrar o KYC PixtoPay ao seu sistema, desde implementação rápida até controle total.",
+    "quickCards": {
+      "embeddedTitle": "Embedded (Iframe)",
+      "embeddedBody": "Usuário na sua página. Resultado via postMessage em tempo real. Recomendado para portais web e SPAs.",
+      "redirectTitle": "Redirect (URL externa)",
+      "redirectBody": "KYC em nova aba ou webview. Resultado na querystring da redirectUrl. Ideal para mobile e links diretos."
+    },
+    "methods": {
+      "api": {
+        "title": "Integração Direta via API",
+        "description": "Use nossa API diretamente no seu sistema",
+        "features": [
+          "Controle total da interface",
+          "Customização completa do design",
+          "Integração nativa com seu sistema",
+          "Máxima flexibilidade"
+        ],
+        "codeTitle": "Exemplo de integração"
+      },
+      "iframe": {
+        "title": "Iframe com PostMessage",
+        "description": "Integração rápida via iframe com eventos em tempo real",
+        "features": [
+          "Implementação em minutos",
+          "Eventos postMessage em tempo real",
+          "Interface pré-construída",
+          "Fácil manutenção"
+        ],
+        "codeTitle": "Configuração do iframe"
+      },
+      "redirect": {
+        "title": "Redirect (URL Externa)",
+        "description": "Envie o usuário direto para a página de KYC e receba o resultado via redirect na sua URL. Ideal para mobile, webview e fluxos fora do seu domínio.",
+        "features": [
+          "Navegação full-page ou nova aba",
+          "Retorno via querystring na redirectUrl",
+          "Ideal para apps mobile (webview) e links diretos",
+          "Fallback para postMessage se a URL for inválida"
+        ]
+      },
+      "dashboard": {
+        "title": "Dashboard de Gerenciamento",
+        "description": "Controle completo via backoffice da PixtoPay",
+        "features": [
+          "Relatórios em tempo real",
+          "Gestão de verificações",
+          "Análise de conversão",
+          "Configurações avançadas"
+        ],
+        "cta": "Acessar Dashboard",
+        "codeTitle": "Acesso ao dashboard"
+      }
+    },
+    "steps": {
+      "0": {
+        "title": "Usuário inicia verificação",
+        "description": "Captura de documentos e selfie com biometria facial"
+      },
+      "1": {
+        "title": "Análise automática",
+        "description": "IA verifica autenticidade e similaridade facial"
+      },
+      "2": {
+        "title": "Resultados no dashboard",
+        "description": "Status, métricas e dados de compliance em tempo real"
+      }
+    }
+  },
+  "flow": {
+    "title": "Fluxo do Processo KYC — visão completa",
+    "subtitle": "Da integração ao resultado final — tudo conectado em um fluxo contínuo e simples de operar.",
+    "cta": "Ver demonstração (iframe e redirect)",
+    "ctaSuffix": "* Recomendado executar a verificação no celular (acesso à câmera e localização).",
+    "steps": {
+      "1": {
+        "title": "Gerar integração",
+        "subtitle": "Crie sua Public Key e configure domínios",
+        "badge": "Segurança",
+        "highlights": [
+          "Gere Public Key no backoffice",
+          "Defina CORS e origens permitidas"
+        ],
+        "linkLabel": "Documentação de chaves"
+      },
+      "2": {
+        "title": "Criar sessão (register)",
+        "subtitle": "CPF → GUID para onboarding ou liveness",
+        "badge": "API",
+        "highlights": [
+          "Envie CPF e integration_id",
+          "Parâmetros opcionais: webhook_url, transaction_id",
+          "Receba GUID e validade da sessão"
+        ]
+      },
+      "3": {
+        "title": "Abrir o fluxo de verificação",
+        "subtitle": "Iframe (embedded) ou redirect em nova aba",
+        "badge": "Iframe / Redirect",
+        "highlights": [
+          "Iframe: carregue o link com allow camera; geolocation",
+          "Redirect: passe redirectUrl e state na URL do KYC",
+          "Sem iframe o resultado vem pela URL de callback"
+        ]
+      },
+      "4": {
+        "title": "Usuário realiza verificação",
+        "subtitle": "Documento + selfie (mobile)",
+        "badge": "Mobile",
+        "highlights": [
+          "Qualidade e foco automático",
+          "Compressão otimizada de imagens"
+        ]
+      },
+      "5": {
+        "title": "Validações automáticas",
+        "subtitle": "OCR, similaridade e compliance",
+        "highlights": [
+          "Face-match ≥ threshold do tenant",
+          "PEP e sanções checadas"
+        ]
+      },
+      "6": {
+        "title": "Eventos em tempo real",
+        "subtitle": "Acompanhe via postMessage",
+        "badge": "Eventos",
+        "highlights": [
+          "type: 'stepUpdate' (1–8)",
+          "type: 'processCompleted' (status)"
+        ]
+      },
+      "7": {
+        "title": "Resultados & auditoria",
+        "subtitle": "Dashboard PixtoPay",
+        "badge": "Dashboard",
+        "highlights": [
+          "Status e métricas em tempo real",
+          "Trilha de auditoria completa"
+        ],
+        "linkLabel": "Acessar Dashboard"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "Solução completa de verificação de identidade para fintechs e empresas.",
+    "developers": "Desenvolvedores",
+    "support": "Suporte",
+    "links": { "docs": "Documentação", "sdks": "SDKs", "examples": "Exemplos", "dashboard": "Dashboard" },
+    "rights": "Todos os direitos reservados."
+  },
+  "scrollToTop": {
+    "aria": "Voltar ao topo",
+    "label": "Topo"
+  }
+}

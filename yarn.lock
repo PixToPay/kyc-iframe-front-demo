@@ -258,10 +258,10 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.28.5"
 
-"@babel/runtime@^7.12.5":
-  version "7.28.4"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.28.4.tgz"
-  integrity sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.29.2":
+  version "7.29.2"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.29.2.tgz"
+  integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
 
 "@babel/template@^7.27.2":
   version "7.27.2"
@@ -327,24 +327,24 @@
   integrity sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==
 
 "@emnapi/core@^1.5.0", "@emnapi/core@^1.7.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.8.1.tgz#fd9efe721a616288345ffee17a1f26ac5dd01349"
-  integrity sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.9.1.tgz#2143069c744ca2442074f8078462e51edd63c7bd"
+  integrity sha512-mukuNALVsoix/w1BJwFzwXBN/dHeejQtuVzcDsfOEsdpCumXb/E9j8w11h5S54tT1xhifGfbbSm/ICrObRb3KA==
   dependencies:
-    "@emnapi/wasi-threads" "1.1.0"
+    "@emnapi/wasi-threads" "1.2.0"
     tslib "^2.4.0"
 
 "@emnapi/runtime@^1.5.0", "@emnapi/runtime@^1.7.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@emnapi/runtime/-/runtime-1.8.1.tgz#550fa7e3c0d49c5fb175a116e8cd70614f9a22a5"
-  integrity sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg==
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@emnapi/runtime/-/runtime-1.9.1.tgz#115ff2a0d589865be6bd8e9d701e499c473f2a8d"
+  integrity sha512-VYi5+ZVLhpgK4hQ0TAjiQiZ6ol0oe4mBx7mVv7IflsiEp0OWoVsp/+f9Vc1hOhE0TtkORVrI1GvzyreqpgWtkA==
   dependencies:
     tslib "^2.4.0"
 
-"@emnapi/wasi-threads@1.1.0", "@emnapi/wasi-threads@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@emnapi/wasi-threads/-/wasi-threads-1.1.0.tgz#60b2102fddc9ccb78607e4a3cf8403ea69be41bf"
-  integrity sha512-WI0DdZ8xFSbgMjR1sFsKABJ/C5OnRrjT06JXbZKexJGrDuPTzZdDYfFlsgcCXCyf+suG5QU2e/y1Wo2V/OapLQ==
+"@emnapi/wasi-threads@1.2.0", "@emnapi/wasi-threads@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@emnapi/wasi-threads/-/wasi-threads-1.2.0.tgz#a19d9772cc3d195370bf6e2a805eec40aa75e18e"
+  integrity sha512-N10dEJNSsUx41Z6pZsXU8FjPjpBEplgH24sfkmITrBED1/U2Esum9F3lfLrMjKHHjmi557zQn7kR9R+XWXu5Rg==
   dependencies:
     tslib "^2.4.0"
 
@@ -1764,6 +1764,13 @@ html-encoding-sniffer@^4.0.0:
   dependencies:
     whatwg-encoding "^3.1.1"
 
+html-parse-stringify@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz"
+  integrity sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==
+  dependencies:
+    void-elements "3.1.0"
+
 http-proxy-agent@^7.0.2:
   version "7.0.2"
   resolved "https://registry.npmjs.org/http-proxy-agent/-/http-proxy-agent-7.0.2.tgz"
@@ -1779,6 +1786,13 @@ https-proxy-agent@^7.0.6:
   dependencies:
     agent-base "^7.1.2"
     debug "4"
+
+i18next@^25.10.10:
+  version "25.10.10"
+  resolved "https://registry.npmjs.org/i18next/-/i18next-25.10.10.tgz"
+  integrity sha512-cqUW2Z3EkRx7NqSyywjkgCLK7KLCL6IFVFcONG7nVYIJ3ekZ1/N5jUsihHV6Bq37NfhgtczxJcxduELtjTwkuQ==
+  dependencies:
+    "@babel/runtime" "^7.29.2"
 
 iconv-lite@0.6.3:
   version "0.6.3"
@@ -2227,6 +2241,15 @@ react-dom@18:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
 
+react-i18next@^16.6.6:
+  version "16.6.6"
+  resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-16.6.6.tgz"
+  integrity sha512-ZgL2HUoW34UKUkOV7uSQFE1CDnRPD+tCR3ywSuWH7u2iapnz86U8Bi3Vrs620qNDzCf1F47NxglCEkchCTDOHw==
+  dependencies:
+    "@babel/runtime" "^7.29.2"
+    html-parse-stringify "^3.0.1"
+    use-sync-external-store "^1.6.0"
+
 react-refresh@^0.18.0:
   version "0.18.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.18.0.tgz"
@@ -2537,6 +2560,11 @@ vite@^7.1.12:
     tinyglobby "^0.2.15"
   optionalDependencies:
     fsevents "~2.3.3"
+
+void-elements@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/void-elements/-/void-elements-3.1.0.tgz"
+  integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
 w3c-xmlserializer@^5.0.0:
   version "5.0.0"

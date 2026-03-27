@@ -1,0 +1,165 @@
+{
+  "section": {
+    "title": "Interactive demo",
+    "subtitle": "Guided 3-step flow: configure the session, start verification, and see the return result."
+  },
+  "stepper": {
+    "aria": { "progress": "KYC demo progress" },
+    "steps": {
+      "config": "Configure session",
+      "start": "Start verification",
+      "result": "Return result"
+    },
+    "ariaStepSuffixDone": ", completed"
+  },
+  "config": {
+    "title": "Start KYC demo",
+    "subtitle": "Choose the mode and flow type, then generate a session to test.",
+    "heading": "Settings",
+    "integrationMode": "Integration mode",
+    "integrationModeAria": "Integration mode",
+    "integrationModeOptions": {
+      "iframe": "Embedded / Iframe",
+      "redirect": "Redirect / New tab"
+    },
+    "integrationModeHelp": {
+      "iframe": "Opens verification on this page.",
+      "redirect": "Opens in another tab and returns with URL parameters."
+    },
+    "flowType": "Flow type",
+    "flowTypeAria": "Flow type",
+    "flowTypeOptions": {
+      "onboarding": "New onboarding",
+      "liveness": "I have an ID"
+    },
+    "flowTypeHelp": {
+      "onboarding": "Starts a flow from scratch.",
+      "liveness": "Continues a flow using an existing identifier."
+    },
+    "sessionExistsNotice": "You already generated a session. Changing settings may require generating a new one.",
+    "configDirty": "Settings changed. Generate a new session to apply.",
+    "reset": "Reset demo",
+    "resetButton": "Reset demo"
+  },
+  "start": {
+    "summaryTitle": "Configuration summary",
+    "cpfLabel": "CPF:",
+    "modeLabel": "Mode:",
+    "modeValue": { "iframe": "Embedded / Iframe", "redirect": "Redirect / New tab" },
+    "flowLabel": "Flow type:",
+    "flowValue": { "onboarding": "New onboarding", "liveness": "I have an ID" },
+    "sessionId": "Session ID:",
+    "submissionId": "Submission ID:",
+    "iframeEmpty": "Generate a session in step 1 to enable the iframe.",
+    "redirect": {
+      "open": "Open verification in a new tab",
+      "openAria": "Open verification in a new tab",
+      "help": "KYC will open in another tab. When you finish, you’ll return to this page with the result.",
+      "needSession": "Generate a session in step 1 to continue."
+    }
+  },
+  "result": {
+    "panelAria": "Redirect result panel",
+    "title": "Return result",
+    "noneTitle": "No result received yet.",
+    "noneSubtitle": "Complete verification in step 2 to see the result here.",
+    "status": {
+      "approved": "Verification approved",
+      "rejected": "Verification rejected",
+      "canceled": "Process canceled",
+      "received": "Return received",
+      "generic": "Result: {{result}}"
+    },
+    "copied": "Copied!",
+    "urlParams": "URL parameters",
+    "view": {
+      "parsed": "Parsed",
+      "raw": "Raw",
+      "parsedAria": "View parameters table",
+      "rawAria": "View raw URL and JSON"
+    },
+    "retry": "Try again",
+    "retryAria": "Try again"
+  },
+  "forms": {
+    "cpf": {
+      "title": "Start KYC demo",
+      "subtitle": "Enter a valid CPF to generate a demo session",
+      "label": "CPF",
+      "placeholder": "000.000.000-00",
+      "invalid": "Invalid CPF",
+      "advanced": "Optional parameters",
+      "optionalFilled_zero": "(0 filled)",
+      "optionalFilled_one": "(1 filled)",
+      "optionalFilled_other": "({{count}} filled)",
+      "webhookUrl": "Webhook URL",
+      "optional": "(optional)",
+      "webhookPlaceholder": "https://webhook.site/...",
+      "transactionId": "Transaction ID",
+      "transactionPlaceholder": "GUID",
+      "submitIdle": "Generate KYC session",
+      "submitLoading": "Generating session...",
+      "started": "KYC session started",
+      "startOver": "Generate a new session",
+      "tipLabel": "Tip:",
+      "tipBody": "Use any valid CPF to test",
+      "tipExample": "Example: 111.444.777-35",
+      "startFailed": "Couldn’t start the session. Please try again."
+    },
+    "onboardingId": {
+      "title": "Continue KYC session",
+      "subtitle": "Enter the session ID (GUID) to continue",
+      "label": "Onboarding ID (GUID)",
+      "placeholder": "e.g. 123e4567-e89b-...",
+      "submissionIdLabel": "Submission ID",
+      "submissionIdPlaceholder": "e.g. 17e2b47e-283a-4f5a-8e0a-...",
+      "submissionIdHelp": "Fill this when the API returns submission_id to build the liveness URL (step=6, flow=liveness).",
+      "submitIdle": "Load session",
+      "submitLoading": "Loading...",
+      "started": "Session loaded",
+      "startOver": "Generate a new session",
+      "embeddedHelp": "Enter the session ID (GUID) to continue."
+    }
+  },
+  "postMessage": {
+    "title": "postMessage events",
+    "current": "Current status:",
+    "step": "Step:",
+    "waiting": "Waiting for events...",
+    "result": {
+      "rejected": "Verification not approved. You can try again.",
+      "canceled": "Process canceled. You can start again.",
+      "approved": "Verification approved. You can start a new process."
+    },
+    "retry": "Try again",
+    "retryAria": "Try again"
+  },
+  "redirectPanel": {
+    "title": "Redirect result",
+    "waiting": "Waiting for a Redirect flow return. Open KYC in a new tab and, when finished, you’ll come back here with the result.",
+    "approved": "Identity successfully verified.",
+    "rejected": "Verification rejected.",
+    "canceled": "Process canceled by the user.",
+    "generic": "Result: {{result}}",
+    "returnUrl": "Return URL:",
+    "hint": "In your application, use these parameters to update the onboarding or continue the user flow."
+  },
+  "paramsTable": {
+    "valueFullTitle": "Click to view full value",
+    "valueFullAria": "View full value for {{key}}",
+    "close": "Close",
+    "copyValue": "Copy value",
+    "copyValueAria": "Copy value for {{key}}",
+    "empty": "No query parameters in the URL.",
+    "copyJsonTitle": "Copy parameters as JSON",
+    "copyJson": "Copy JSON",
+    "copyKeyValueTitle": "Copy key=value per line",
+    "copyKeyValue": "Copy key=value",
+    "headParam": "Parameter",
+    "headValue": "Value",
+    "headCopy": "Copy"
+  },
+  "mobileOnly": {
+    "banner": "KYC flow works only on mobile devices (uses camera and location). Scan the QR code to open on your phone."
+  }
+}

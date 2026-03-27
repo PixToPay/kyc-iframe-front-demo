@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Icon } from "@iconify/react";
+import { useTranslation } from "react-i18next";
 
 const TRUNCATE_VAL = 32;
 
@@ -49,6 +50,7 @@ function ValueCell({
   paramKey: string;
   onCopy: () => void;
 }) {
+  const { t } = useTranslation("demo");
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [popoverAnchor, setPopoverAnchor] = useState<DOMRect | null>(null);
   const [copied, setCopied] = useState(false);
@@ -86,8 +88,8 @@ function ValueCell({
             type="button"
             onClick={openPopover}
             className="block w-full text-left truncate max-w-[180px] sm:max-w-[240px] text-sm hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-inset rounded cursor-pointer transition-colors duration-150"
-            title="Clique para ver valor completo"
-            aria-label={`Ver valor completo de ${paramKey}`}
+            title={t("paramsTable.valueFullTitle")}
+            aria-label={t("paramsTable.valueFullAria", { key: paramKey })}
           >
             {truncated}
           </button>
@@ -102,8 +104,8 @@ function ValueCell({
           type="button"
           onClick={handleCopy}
           className="p-2 rounded-md text-gray-500 hover:bg-gray-200 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-inset transition-colors duration-150 cursor-pointer"
-          title="Copiar valor"
-          aria-label={`Copiar valor de ${paramKey}`}
+          title={t("paramsTable.copyValue")}
+          aria-label={t("paramsTable.copyValueAria", { key: paramKey })}
         >
           {copied ? (
             <Icon icon="tabler:check" className="w-4 h-4 text-green-600" aria-hidden />
@@ -127,7 +129,7 @@ function ValueCell({
             />
             <div
               role="dialog"
-              aria-label={`Valor completo de ${paramKey}`}
+              aria-label={t("paramsTable.valueFullAria", { key: paramKey })}
               className="fixed z-50 rounded-lg border border-gray-200 bg-white p-3 shadow-lg left-4 right-4 sm:left-auto sm:right-auto sm:min-w-[280px] sm:max-w-[360px] transition-opacity duration-150"
               style={
                 popoverAnchor
@@ -152,7 +154,7 @@ function ValueCell({
                     setPopoverAnchor(null);
                   }}
                   className="p-1 rounded text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] shrink-0 cursor-pointer"
-                  aria-label="Fechar"
+                  aria-label={t("paramsTable.close")}
                 >
                   <Icon icon="tabler:x" className="w-4 h-4" />
                 </button>
@@ -174,6 +176,7 @@ export function QueryParamsTable({
   viewMode: "parsed" | "raw";
   onCopy?: () => void;
 }) {
+  const { t } = useTranslation("demo");
   const params = useMemo(() => parseParamsFromUrl(url), [url]);
   const entries = Object.entries(params);
 
@@ -202,7 +205,7 @@ export function QueryParamsTable({
   if (entries.length === 0) {
     return (
       <p className="text-sm text-gray-500 py-3">
-        Nenhum parâmetro de query na URL.
+        {t("paramsTable.empty")}
       </p>
     );
   }
@@ -214,21 +217,21 @@ export function QueryParamsTable({
           type="button"
           onClick={copyJson}
           className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-offset-1 transition-colors duration-150 cursor-pointer"
-          title="Copiar parâmetros como JSON"
-          aria-label="Copiar parâmetros como JSON"
+          title={t("paramsTable.copyJsonTitle")}
+          aria-label={t("paramsTable.copyJsonTitle")}
         >
           <Icon icon="tabler:copy" className="w-3.5 h-3.5" aria-hidden />
-          Copiar JSON
+          {t("paramsTable.copyJson")}
         </button>
         <button
           type="button"
           onClick={copyKeyValue}
           className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-offset-1 transition-colors duration-150 cursor-pointer"
-          title="Copiar key=value por linha"
-          aria-label="Copiar key=value por linha"
+          title={t("paramsTable.copyKeyValueTitle")}
+          aria-label={t("paramsTable.copyKeyValueTitle")}
         >
           <Icon icon="tabler:copy" className="w-3.5 h-3.5" aria-hidden />
-          Copiar key=value
+          {t("paramsTable.copyKeyValue")}
         </button>
       </div>
       <div className="rounded-lg border border-gray-200 overflow-hidden">
@@ -236,13 +239,13 @@ export function QueryParamsTable({
           <thead>
             <tr className="bg-gray-100 border-b border-gray-200">
               <th className="text-left py-2.5 px-3 font-semibold text-gray-800 text-xs uppercase tracking-wide">
-                Parâmetro
+                {t("paramsTable.headParam")}
               </th>
               <th className="text-left py-2.5 px-3 font-semibold text-gray-800 text-xs uppercase tracking-wide">
-                Valor
+                {t("paramsTable.headValue")}
               </th>
               <th className="w-12 py-2.5 px-2 text-right font-semibold text-gray-800 text-xs uppercase tracking-wide">
-                Copiar
+                {t("paramsTable.headCopy")}
               </th>
             </tr>
           </thead>

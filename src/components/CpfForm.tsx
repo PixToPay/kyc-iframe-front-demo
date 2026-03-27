@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { validateCPF } from "@/lib/validators";
 import { useKycSession } from "@/hooks/useKycSession";
+import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
 
@@ -11,7 +12,6 @@ interface CpfFormProps {
   onReset?: () => void;
   isProcessStarted?: boolean;
   embedded?: boolean;
-  /** Controla textos auxiliares por tipo de demonstração */
   demoMode?: DemoMode;
 }
 
@@ -22,6 +22,7 @@ export function CpfForm({
   embedded = false,
   demoMode = "iframe",
 }: CpfFormProps) {
+  const { t } = useTranslation("demo");
   const [cpf, setCpf] = useState("");
   const [webhookUrl, setWebhookUrl] = useState("");
   const [transactionId, setTransactionId] = useState("");
@@ -36,17 +37,12 @@ export function CpfForm({
   const showCpfHelper = cpfTouched && cpfDigits.length >= 11 && !cpfValid;
   const optionalFilled =
     (webhookUrl.trim() ? 1 : 0) + (transactionId.trim() ? 1 : 0);
-  const optionalLabel =
-    optionalFilled === 0
-      ? "(0 preenchidos)"
-      : optionalFilled === 1
-        ? "(1 preenchido)"
-        : "(2 preenchidos)";
+  const optionalLabel = t("forms.cpf.optionalFilled", { count: optionalFilled });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!cpfValid) {
-      setError("CPF inválido");
+      setError(t("forms.cpf.invalid"));
       setCpfTouched(true);
       return;
     }
@@ -67,7 +63,7 @@ export function CpfForm({
       if (!guid) throw new Error("onboarding_id_missing");
       onGuidGenerated(guid, undefined, cpf);
     } catch (err) {
-      setError("Não foi possível iniciar a sessão. Tente novamente.");
+      setError(t("forms.cpf.startFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -89,12 +85,12 @@ export function CpfForm({
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="cpf-demo" className="block text-sm font-medium text-gray-700 mb-1">
-            CPF <span className="text-red-500">*</span>
+            {t("forms.cpf.label")} <span className="text-red-500">*</span>
           </label>
           <input
             id="cpf-demo"
             type="text"
-            placeholder="000.000.000-00"
+            placeholder={t("forms.cpf.placeholder")}
             value={cpf}
             onChange={(e) => {
               setCpf(
@@ -113,7 +109,7 @@ export function CpfForm({
           />
           {(showCpfHelper || error) && (
             <p id="cpf-helper" className="text-red-500 text-sm mt-1">
-              {error || "Digite um CPF válido."}
+              {error || t("forms.cpf.invalid")}
             </p>
           )}
         </div>
@@ -127,7 +123,7 @@ export function CpfForm({
             aria-controls="optional-params"
             id="optional-params-toggle"
           >
-            <span>Parâmetros opcionais</span>
+            <span>{t("forms.cpf.advanced")}</span>
             <span className="text-gray-500">{optionalLabel}</span>
             <Icon
               icon={showAdvanced ? "tabler:chevron-up" : "tabler:chevron-down"}
@@ -144,11 +140,12 @@ export function CpfForm({
             <div className="p-4 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Webhook URL <span className="text-gray-400 text-xs">(opcional)</span>
+                  {t("forms.cpf.webhookUrl")}{" "}
+                  <span className="text-gray-400 text-xs">{t("forms.cpf.optional")}</span>
                 </label>
                 <input
                   type="url"
-                  placeholder="https://webhook.site/..."
+                  placeholder={t("forms.cpf.webhookPlaceholder")}
                   value={webhookUrl}
                   onChange={(e) => setWebhookUrl(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
@@ -156,11 +153,12 @@ export function CpfForm({
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Transaction ID <span className="text-gray-400 text-xs">(opcional)</span>
+                  {t("forms.cpf.transactionId")}{" "}
+                  <span className="text-gray-400 text-xs">{t("forms.cpf.optional")}</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="GUID"
+                  placeholder={t("forms.cpf.transactionPlaceholder")}
                   value={transactionId}
                   onChange={(e) => setTransactionId(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
@@ -181,16 +179,19 @@ export function CpfForm({
             {isLoading ? (
               <>
                 <Icon icon="tabler:loader-2" className="text-lg animate-spin" aria-hidden />
-                Gerando…
+                {t("forms.cpf.submitLoading")}
               </>
             ) : (
-              "Gerar Sessão KYC"
+              t("forms.cpf.submitIdle")
             )}
           </motion.button>
         ) : (
           <div className="space-y-3">
             <div className="w-full bg-green-100 text-green-800 font-semibold py-3 rounded-xl text-center">
-              ✅ Sessão KYC Iniciada
+              <span className="inline-flex items-center gap-2 justify-center">
+                <Icon icon="tabler:circle-check-filled" aria-hidden />
+                {t("forms.cpf.started")}
+              </span>
             </div>
             <motion.button
               whileHover={{ scale: 1.01 }}
@@ -199,7 +200,7 @@ export function CpfForm({
               type="button"
               className="w-full bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] font-semibold py-3 rounded-xl hover:opacity-90 cursor-pointer transition-opacity duration-150 focus:outline-none focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:ring-offset-2"
             >
-              Gerar nova sessão
+              {t("forms.cpf.startOver")}
             </motion.button>
           </div>
         )}
@@ -208,9 +209,13 @@ export function CpfForm({
       {!embedded && (
         <div className="mt-4 text-xs text-gray-500">
           <p>
-            💡 <strong>Dica:</strong> Use qualquer CPF válido para testar
+            <span className="inline-flex items-center gap-1.5">
+              <Icon icon="tabler:bulb" aria-hidden />
+              <strong>{t("forms.cpf.tipLabel")}</strong>
+              <span>{t("forms.cpf.tipBody")}</span>
+            </span>
           </p>
-          <p>Exemplo: 111.444.777-35</p>
+          <p>{t("forms.cpf.tipExample")}</p>
         </div>
       )}
     </>
@@ -225,7 +230,7 @@ export function CpfForm({
         className="space-y-2"
       >
         <p className="text-sm text-gray-600">
-          Digite um CPF válido para gerar uma sessão de demonstração.
+          {t("forms.cpf.subtitle")}
         </p>
         {content}
       </motion.div>
@@ -239,10 +244,10 @@ export function CpfForm({
       className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200"
     >
       <h3 className="text-lg font-semibold text-[color:var(--brand-dark)] mb-4">
-        Iniciar Demonstração KYC
+        {t("forms.cpf.title")}
       </h3>
       <p className="text-sm text-gray-600 mb-4">
-        Digite um CPF válido para gerar uma sessão de demonstração
+        {t("forms.cpf.subtitle")}
       </p>
       {content}
     </motion.div>

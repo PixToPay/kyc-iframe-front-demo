@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function Hero({ onStart }: { onStart: () => void }) {
+  const { t } = useTranslation("landing");
   return (
     <section
       id="hero"
@@ -20,8 +22,7 @@ export function Hero({ onStart }: { onStart: () => void }) {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-3xl md:text-3xl lg:text-3xl xl:text-4xl font-bold text-white mb-6 leading-snug">
-                Veja como o KYC da PixtoPay pode ser integrado ao seu sistema em
-                minutos.
+                {t("hero.title")}
               </h1>
             </motion.div>
 
@@ -31,8 +32,7 @@ export function Hero({ onStart }: { onStart: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              Demonstração interativa de verificação de identidade via iframe —
-              com reconhecimento facial, documentos e compliance automatizados.
+              {t("hero.subtitle")}
             </motion.p>
 
             <motion.div
@@ -44,7 +44,7 @@ export function Hero({ onStart }: { onStart: () => void }) {
                 onClick={onStart}
                 className="bg-white text-[color:var(--brand-dark)] px-6 md:px-10 py-3 md:py-4 rounded-xl font-semibold text-base md:text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105"
               >
-                Iniciar Demonstração
+                {t("hero.cta")}
               </button>
             </motion.div>
           </div>

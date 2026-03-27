@@ -22,7 +22,9 @@ export function buildKycUrl({
   const url = new URL(`${origin}/${isLiveness ? "verify" : ""}`);
   url.searchParams.set("guid", guid);
   url.searchParams.set("step", String(step));
-  const language = (lang || import.meta.env.VITE_LANG || "pt").toString();
+  const storedLocale =
+    typeof window !== "undefined" ? window.localStorage.getItem("locale") : null;
+  const language = (lang || storedLocale || import.meta.env.VITE_LANG || "pt-BR").toString();
   if (language) url.searchParams.set("lang", language);
   if (isLiveness) url.searchParams.set("onlyliveness", "1");
   if (submissionId) url.searchParams.set("submission_id", submissionId);

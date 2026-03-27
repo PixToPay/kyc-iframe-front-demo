@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Icon } from "@iconify/react";
+import { useTranslation } from "react-i18next";
 
 interface OnboardingIdFormProps {
   onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string) => void;
@@ -16,6 +18,7 @@ export function OnboardingIdForm({
   showSubmissionId = false,
   embedded = false,
 }: OnboardingIdFormProps) {
+  const { t } = useTranslation("demo");
   const [guid, setGuid] = useState("");
   const [submissionId, setSubmissionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +50,11 @@ export function OnboardingIdForm({
     <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Onboarding ID (GUID) <span className="text-red-500">*</span>
+            {t("forms.onboardingId.label")} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            placeholder="Ex: 123e4567-e89b-..."
+            placeholder={t("forms.onboardingId.placeholder")}
             value={guid}
             onChange={(e) => setGuid(e.target.value)}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none"
@@ -62,18 +65,18 @@ export function OnboardingIdForm({
         {showSubmissionId && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Submission ID <span className="text-gray-400">(opcional)</span>
+              {t("forms.onboardingId.submissionIdLabel")}{" "}
+              <span className="text-gray-400">{t("forms.cpf.optional")}</span>
             </label>
             <input
               type="text"
-              placeholder="Ex: 17e2b47e-283a-4f5a-8e0a-..."
+              placeholder={t("forms.onboardingId.submissionIdPlaceholder")}
               value={submissionId}
               onChange={(e) => setSubmissionId(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none"
             />
             <p className="text-xs text-gray-500 mt-1">
-              Preencha quando a API retornar submission_id para montar a URL de
-              liveness (step=6, flow=liveness).
+              {t("forms.onboardingId.submissionIdHelp")}
             </p>
           </div>
         )}
@@ -86,12 +89,15 @@ export function OnboardingIdForm({
             disabled={isLoading || !guid.trim()}
             className="w-full bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] font-semibold py-3 rounded-lg hover:opacity-90 disabled:opacity-50 transition"
           >
-            {isLoading ? "Carregando..." : "Carregar Sessão"}
+            {isLoading ? t("forms.onboardingId.submitLoading") : t("forms.onboardingId.submitIdle")}
           </motion.button>
         ) : (
           <div className="space-y-3">
             <div className="w-full bg-green-100 text-green-800 font-semibold py-3 rounded-lg text-center">
-              ✅ Sessão Carregada
+              <span className="inline-flex items-center gap-2 justify-center">
+                <Icon icon="tabler:circle-check-filled" aria-hidden />
+                {t("forms.onboardingId.started")}
+              </span>
             </div>
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -100,7 +106,7 @@ export function OnboardingIdForm({
               type="button"
               className="w-full bg-[color:var(--brand-primary)] text-[color:var(--brand-dark)] font-semibold py-3 rounded-xl hover:opacity-90 transition"
             >
-              Gerar nova sessão
+              {t("forms.onboardingId.startOver")}
             </motion.button>
           </div>
         )}
@@ -116,7 +122,7 @@ export function OnboardingIdForm({
         className="space-y-2"
       >
         <p className="text-sm text-gray-600">
-          Digite o ID da sessão (GUID) para continuar.
+          {t("forms.onboardingId.embeddedHelp")}
         </p>
         {formContent}
       </motion.div>
@@ -130,10 +136,10 @@ export function OnboardingIdForm({
       className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200"
     >
       <h3 className="text-lg font-semibold text-[color:var(--brand-dark)] mb-4">
-        Continuar Sessão KYC
+        {t("forms.onboardingId.title")}
       </h3>
       <p className="text-sm text-gray-600 mb-4">
-        Digite o ID da sessão (GUID) para continuar
+        {t("forms.onboardingId.subtitle")}
       </p>
       {formContent}
     </motion.div>

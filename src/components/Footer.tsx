@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 export function Footer() {
+  const { t } = useTranslation("landing");
   return (
     <footer className="bg-gradient-to-t from-[color:var(--brand-dark)] to-[color:var(--brand-dark)]/95 text-gray-300 py-12 relative">
       <div className="max-w-6xl mx-auto px-4">
@@ -14,34 +17,33 @@ export function Footer() {
               <img src="/assets/logos/kyc.svg" className="h-8" alt="KYC" />
             </div>
             <p className="text-sm text-gray-400 mb-4">
-              Solução completa de verificação de identidade para fintechs e
-              empresas.
+              {t("footer.tagline")}
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-4">Desenvolvedores</h4>
+            <h4 className="font-semibold text-white mb-4">{t("footer.developers")}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#" className="hover:text-white transition">
-                  Documentação
+                  {t("footer.links.docs")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition">
-                  SDKs
+                  {t("footer.links.sdks")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition">
-                  Exemplos
+                  {t("footer.links.examples")}
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-4">Suporte</h4>
+            <h4 className="font-semibold text-white mb-4">{t("footer.support")}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a
@@ -57,7 +59,7 @@ export function Footer() {
                   target="_blank"
                   className="hover:text-white transition"
                 >
-                  Dashboard
+                  {t("footer.links.dashboard")}
                 </a>
               </li>
             </ul>
@@ -66,8 +68,7 @@ export function Footer() {
 
         <div className="border-t border-gray-700 pt-6 text-center">
           <p className="text-sm text-gray-400">
-            © {new Date().getFullYear()} PixtoPay. Todos os direitos
-            reservados.
+            © {new Date().getFullYear()} PixtoPay. {t("footer.rights")}
           </p>
         </div>
       </div>

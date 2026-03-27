@@ -1,0 +1,174 @@
+{
+  "header": {
+    "nav": {
+      "howItWorks": { "desktop": "How it works", "mobile": "How" },
+      "demo": { "desktop": "Demo →", "mobile": "Demo →" }
+    },
+    "language": {
+      "label": "Language",
+      "ptBR": "Portuguese (Brazil)",
+      "en": "English",
+      "es": "Spanish"
+    }
+  },
+  "hero": {
+    "title": "See how PixtoPay KYC can be integrated into your system in minutes.",
+    "subtitle": "Interactive identity verification demo via iframe — with face recognition, documents, and automated compliance.",
+    "cta": "Start demo"
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Four ways to integrate PixtoPay KYC into your system, from quick implementation to full control.",
+    "quickCards": {
+      "embeddedTitle": "Embedded (Iframe)",
+      "embeddedBody": "User stays on your page. Result via real-time postMessage. Recommended for web portals and SPAs.",
+      "redirectTitle": "Redirect (External URL)",
+      "redirectBody": "KYC opens in a new tab or webview. Result comes back in the redirectUrl querystring. Ideal for mobile and direct links."
+    },
+    "methods": {
+      "api": {
+        "title": "Direct API integration",
+        "description": "Use our API directly in your system",
+        "features": [
+          "Full control of the UI",
+          "Complete design customization",
+          "Native integration with your system",
+          "Maximum flexibility"
+        ],
+        "codeTitle": "Integration example"
+      },
+      "iframe": {
+        "title": "Iframe with PostMessage",
+        "description": "Fast iframe integration with real-time events",
+        "features": [
+          "Implementation in minutes",
+          "Real-time postMessage events",
+          "Pre-built interface",
+          "Easy maintenance"
+        ],
+        "codeTitle": "Iframe setup"
+      },
+      "redirect": {
+        "title": "Redirect (External URL)",
+        "description": "Send the user straight to the KYC page and receive the result via redirect to your URL. Ideal for mobile, webviews, and flows outside your domain.",
+        "features": [
+          "Full-page navigation or new tab",
+          "Return via redirectUrl querystring",
+          "Ideal for mobile apps (webview) and direct links",
+          "Fallback to postMessage if the URL is invalid"
+        ]
+      },
+      "dashboard": {
+        "title": "Management dashboard",
+        "description": "Full control via PixtoPay backoffice",
+        "features": [
+          "Real-time reports",
+          "Verification management",
+          "Conversion analysis",
+          "Advanced settings"
+        ],
+        "cta": "Open dashboard",
+        "codeTitle": "Dashboard access"
+      }
+    },
+    "steps": {
+      "0": {
+        "title": "User starts verification",
+        "description": "Document capture and selfie with facial biometrics"
+      },
+      "1": {
+        "title": "Automated analysis",
+        "description": "AI checks authenticity and facial similarity"
+      },
+      "2": {
+        "title": "Results in the dashboard",
+        "description": "Status, metrics, and compliance data in real time"
+      }
+    }
+  },
+  "flow": {
+    "title": "KYC process flow — full overview",
+    "subtitle": "From integration to final result — everything connected in a continuous flow that’s simple to operate.",
+    "cta": "See the demo (iframe and redirect)",
+    "ctaSuffix": "* We recommend running verification on your phone (camera and location access).",
+    "steps": {
+      "1": {
+        "title": "Create integration",
+        "subtitle": "Generate your Public Key and configure domains",
+        "badge": "Security",
+        "highlights": [
+          "Generate a Public Key in the backoffice",
+          "Set CORS and allowed origins"
+        ],
+        "linkLabel": "Keys documentation"
+      },
+      "2": {
+        "title": "Create session (register)",
+        "subtitle": "CPF → GUID for onboarding or liveness",
+        "badge": "API",
+        "highlights": [
+          "Send CPF and integration_id",
+          "Optional params: webhook_url, transaction_id",
+          "Receive a GUID and session validity"
+        ]
+      },
+      "3": {
+        "title": "Open the verification flow",
+        "subtitle": "Iframe (embedded) or redirect in a new tab",
+        "badge": "Iframe / Redirect",
+        "highlights": [
+          "Iframe: load the link with allow camera; geolocation",
+          "Redirect: pass redirectUrl and state in the KYC URL",
+          "Without iframe, the result comes back via the callback URL"
+        ]
+      },
+      "4": {
+        "title": "User completes verification",
+        "subtitle": "Document + selfie (mobile)",
+        "badge": "Mobile",
+        "highlights": [
+          "Auto quality and focus checks",
+          "Optimized image compression"
+        ]
+      },
+      "5": {
+        "title": "Automated checks",
+        "subtitle": "OCR, similarity, and compliance",
+        "highlights": [
+          "Face-match ≥ tenant threshold",
+          "PEP and sanctions checked"
+        ]
+      },
+      "6": {
+        "title": "Real-time events",
+        "subtitle": "Track via postMessage",
+        "badge": "Events",
+        "highlights": [
+          "type: 'stepUpdate' (1–8)",
+          "type: 'processCompleted' (status)"
+        ]
+      },
+      "7": {
+        "title": "Results & audit",
+        "subtitle": "PixtoPay dashboard",
+        "badge": "Dashboard",
+        "highlights": [
+          "Real-time status and metrics",
+          "Complete audit trail"
+        ],
+        "linkLabel": "Open dashboard"
+      }
+    }
+  },
+  "footer": {
+    "tagline": "A complete identity verification solution for fintechs and businesses.",
+    "developers": "Developers",
+    "support": "Support",
+    "links": { "docs": "Documentation", "sdks": "SDKs", "examples": "Examples", "dashboard": "Dashboard" },
+    "rights": "All rights reserved."
+  },
+  "scrollToTop": {
+    "aria": "Back to top",
+    "label": "Top"
+  }
+}
