@@ -1,5 +1,6 @@
 import { CpfForm } from "./CpfForm";
 import { OnboardingIdForm } from "./OnboardingIdForm";
+import { LivenessForm } from "./LivenessForm";
 import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 
@@ -27,7 +28,7 @@ export function StepSessionConfig({
   setDemoMode: (m: DemoMode) => void;
   activeForm: FlowType;
   setActiveForm: (f: FlowType) => void;
-  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string) => void;
+  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string, redirectUrl?: string) => void;
   onReset: () => void;
   guid: string | undefined;
   configDirty?: boolean;
@@ -160,13 +161,19 @@ export function StepSessionConfig({
           onReset={onReset}
           isProcessStarted={!!guid}
         />
+      ) : activeForm === "liveness" ? (
+        <LivenessForm
+          embedded
+          onGuidGenerated={onGuidGenerated}
+          onReset={onReset}
+          isProcessStarted={!!guid}
+        />
       ) : (
         <OnboardingIdForm
           embedded
           onGuidGenerated={onGuidGenerated}
           onReset={onReset}
           isProcessStarted={!!guid}
-          showSubmissionId={activeForm === "liveness"}
         />
       )}
 

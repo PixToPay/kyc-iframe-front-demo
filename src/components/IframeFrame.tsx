@@ -14,7 +14,7 @@ export function IframeFrame({
     ? buildKycUrl({
         guid,
         step: 1,
-        flow: isLiveness ? "kyc-faceindex" : undefined,
+        flow: isLiveness ? "liveness" : undefined,
         submissionId: isLiveness ? submissionId : undefined,
       })
     : "about:blank";

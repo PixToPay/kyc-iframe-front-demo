@@ -121,6 +121,14 @@
       "started": "Session loaded",
       "startOver": "Generate a new session",
       "embeddedHelp": "Enter the session ID (GUID) to continue."
+    },
+    "liveness": {
+      "title": "Start Facial Verification",
+      "subtitle": "Enter a valid CPF to generate a liveness link.",
+      "submitIdle": "Generate Liveness Link",
+      "submitLoading": "Generating link...",
+      "started": "Liveness Link Generated",
+      "startFailed": "Couldn't generate the liveness link. Please try again."
     }
   },
   "postMessage": {
