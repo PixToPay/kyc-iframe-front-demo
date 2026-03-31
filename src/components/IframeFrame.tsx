@@ -6,7 +6,7 @@ export function IframeFrame({
   submissionId,
 }: {
   guid?: string;
-  type?: "onboarding" | "liveness";
+  type?: "onboarding" | "resume" | "liveness";
   submissionId?: string;
 }) {
   const isLiveness = type === "liveness";

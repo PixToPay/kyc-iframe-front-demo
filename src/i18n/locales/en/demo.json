@@ -30,11 +30,13 @@
     "flowTypeAria": "Flow type",
     "flowTypeOptions": {
       "onboarding": "New onboarding",
-      "liveness": "I have an ID"
+      "resume": "Resume Onboarding",
+      "liveness": "Liveness (Face)"
     },
     "flowTypeHelp": {
       "onboarding": "Starts a flow from scratch.",
-      "liveness": "Continues a flow using an existing identifier."
+      "resume": "Resumes a flow from where it left off using an ID.",
+      "liveness": "Accesses the facial verification flow directly."
     },
     "sessionExistsNotice": "You already generated a session. Changing settings may require generating a new one.",
     "configDirty": "Settings changed. Generate a new session to apply.",
@@ -47,7 +49,7 @@
     "modeLabel": "Mode:",
     "modeValue": { "iframe": "Embedded / Iframe", "redirect": "Redirect / New tab" },
     "flowLabel": "Flow type:",
-    "flowValue": { "onboarding": "New onboarding", "liveness": "I have an ID" },
+    "flowValue": { "onboarding": "New onboarding", "resume": "Resume Onboarding", "liveness": "Liveness (Face)" },
     "sessionId": "Session ID:",
     "submissionId": "Submission ID:",
     "iframeEmpty": "Generate a session in step 1 to enable the iframe.",
@@ -112,9 +114,9 @@
       "label": "Onboarding ID (GUID)",
       "placeholder": "e.g. 123e4567-e89b-...",
       "submissionIdLabel": "Submission ID",
-      "submissionIdPlaceholder": "e.g. 17e2b47e-283a-4f5a-8e0a-...",
-      "submissionIdHelp": "Fill this when the API returns submission_id to build the liveness URL (step=6, flow=liveness).",
-      "submitIdle": "Load session",
+      "submissionIdPlaceholder": "Ex: 17e2b47e-283a-4f5a-8e0a-...",
+      "submissionIdHelp": "Fill this for Liveness URLs when you have a submission_id (flow=liveness).",
+      "submitIdle": "Load Session",
       "submitLoading": "Loading...",
       "started": "Session loaded",
       "startOver": "Generate a new session",

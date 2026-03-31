@@ -30,11 +30,13 @@
     "flowTypeAria": "Tipo de flujo",
     "flowTypeOptions": {
       "onboarding": "Nuevo onboarding",
-      "liveness": "Tengo un ID"
+      "resume": "Continuar Onboarding",
+      "liveness": "Liveness (Face)"
     },
     "flowTypeHelp": {
       "onboarding": "Inicia un flujo desde cero.",
-      "liveness": "Continúa un flujo usando un identificador existente."
+      "resume": "Reactiva un onboarding abandonado usando su ID.",
+      "liveness": "Accede directamente a la verificación facial."
     },
     "sessionExistsNotice": "Ya generaste una sesión. Cambiar configuraciones puede requerir generar una nueva.",
     "configDirty": "La configuración cambió. Genera una nueva sesión para aplicar.",
@@ -47,7 +49,7 @@
     "modeLabel": "Modo:",
     "modeValue": { "iframe": "Embedded / Iframe", "redirect": "Redirect / Nueva pestaña" },
     "flowLabel": "Tipo de flujo:",
-    "flowValue": { "onboarding": "Nuevo onboarding", "liveness": "Tengo un ID" },
+    "flowValue": { "onboarding": "Nuevo onboarding", "resume": "Continuar Onboarding", "liveness": "Liveness (Face)" },
     "sessionId": "Session ID:",
     "submissionId": "Submission ID:",
     "iframeEmpty": "Genera una sesión en el paso 1 para habilitar el iframe.",
@@ -112,9 +114,9 @@
       "label": "Onboarding ID (GUID)",
       "placeholder": "Ej: 123e4567-e89b-...",
       "submissionIdLabel": "Submission ID",
-      "submissionIdPlaceholder": "Ej: 17e2b47e-283a-4f5a-8e0a-...",
-      "submissionIdHelp": "Completa cuando la API devuelva submission_id para armar la URL de liveness (step=6, flow=liveness).",
-      "submitIdle": "Cargar sesión",
+      "submissionIdPlaceholder": "Ex: 17e2b47e-283a-4f5a-8e0a-...",
+      "submissionIdHelp": "Complete esto para URLs de Liveness si tiene submission_id (flow=liveness).",
+      "submitIdle": "Cargar Sesión",
       "submitLoading": "Cargando...",
       "started": "Sesión cargada",
       "startOver": "Generar nueva sesión",

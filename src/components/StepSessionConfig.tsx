@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
-type FlowType = "onboarding" | "liveness";
+type FlowType = "onboarding" | "resume" | "liveness";
 
 const segmentButtonClass = (active: boolean) =>
   active
@@ -59,14 +59,14 @@ export function StepSessionConfig({
               {t("config.integrationMode")}
             </p>
             <div
-              className="inline-flex rounded-xl border border-gray-200 p-1 bg-gray-50 cursor-default"
+              className="inline-flex flex-wrap rounded-xl border border-gray-200 p-1 bg-gray-50 cursor-default gap-1"
               role="group"
               aria-label={t("config.integrationModeAria")}
             >
               <button
                 type="button"
                 onClick={() => setDemoMode("iframe")}
-                className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(demoMode === "iframe")}`}
+                className={`grow text-center whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(demoMode === "iframe")}`}
                 aria-pressed={demoMode === "iframe"}
                 aria-label={t("config.integrationModeOptions.iframe")}
               >
@@ -75,7 +75,7 @@ export function StepSessionConfig({
               <button
                 type="button"
                 onClick={() => setDemoMode("redirect")}
-                className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(demoMode === "redirect")}`}
+                className={`grow text-center whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(demoMode === "redirect")}`}
                 aria-pressed={demoMode === "redirect"}
                 aria-label={t("config.integrationModeOptions.redirect")}
               >
@@ -94,14 +94,14 @@ export function StepSessionConfig({
               {t("config.flowType")}
             </p>
             <div
-              className="inline-flex rounded-xl border border-gray-200 p-1 bg-gray-50 cursor-default"
+              className="inline-flex flex-wrap rounded-xl border border-gray-200 p-1 bg-gray-50 cursor-default gap-1"
               role="group"
               aria-label={t("config.flowTypeAria")}
             >
               <button
                 type="button"
                 onClick={() => handleChangeFlow("onboarding")}
-                className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "onboarding")}`}
+                className={`grow text-center whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "onboarding")}`}
                 aria-pressed={activeForm === "onboarding"}
                 aria-label={t("config.flowTypeOptions.onboarding")}
               >
@@ -109,8 +109,17 @@ export function StepSessionConfig({
               </button>
               <button
                 type="button"
+                onClick={() => handleChangeFlow("resume")}
+                className={`grow text-center whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "resume")}`}
+                aria-pressed={activeForm === "resume"}
+                aria-label={t("config.flowTypeOptions.resume")}
+              >
+                {t("config.flowTypeOptions.resume")}
+              </button>
+              <button
+                type="button"
                 onClick={() => handleChangeFlow("liveness")}
-                className={`shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "liveness")}`}
+                className={`grow text-center whitespace-nowrap px-4 py-2 text-sm font-medium rounded-lg border cursor-pointer ${TRANSITION} ${segmentButtonClass(activeForm === "liveness")}`}
                 aria-pressed={activeForm === "liveness"}
                 aria-label={t("config.flowTypeOptions.liveness")}
               >
@@ -120,7 +129,9 @@ export function StepSessionConfig({
             <p className="text-xs text-gray-500 mt-1.5">
               {activeForm === "onboarding"
                 ? t("config.flowTypeHelp.onboarding")
-                : t("config.flowTypeHelp.liveness")}
+                : activeForm === "resume"
+                  ? t("config.flowTypeHelp.resume")
+                  : t("config.flowTypeHelp.liveness")}
             </p>
           </div>
         </div>
@@ -155,7 +166,7 @@ export function StepSessionConfig({
           onGuidGenerated={onGuidGenerated}
           onReset={onReset}
           isProcessStarted={!!guid}
-          showSubmissionId
+          showSubmissionId={activeForm === "liveness"}
         />
       )}
 

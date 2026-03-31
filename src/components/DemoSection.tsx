@@ -7,7 +7,7 @@ import type { RedirectResult } from "./RedirectResultPanel";
 import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
-type FlowType = "onboarding" | "liveness";
+type FlowType = "onboarding" | "resume" | "liveness";
 
 export function DemoSection({
   guid: initialGuid,

@@ -33,8 +33,7 @@ export function OnboardingIdForm({
         guid.trim(),
         showSubmissionId && submissionId.trim()
           ? submissionId.trim()
-          : undefined,
-        undefined
+          : undefined
       );
       setIsLoading(false);
     }, 500);
@@ -73,7 +72,7 @@ export function OnboardingIdForm({
               placeholder={t("forms.onboardingId.submissionIdPlaceholder")}
               value={submissionId}
               onChange={(e) => setSubmissionId(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[color:var(--brand-primary)] focus:border-transparent outline-none transition-[border-color,box-shadow] duration-150"
             />
             <p className="text-xs text-gray-500 mt-1">
               {t("forms.onboardingId.submissionIdHelp")}

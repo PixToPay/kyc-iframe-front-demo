@@ -7,7 +7,7 @@ import type { RedirectResult } from "./RedirectResultPanel";
 import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
-type FlowType = "onboarding" | "liveness";
+type FlowType = "onboarding" | "resume" | "liveness";
 
 const STEPS_IFRAME = [
   { id: 0, key: "config" },
@@ -53,7 +53,7 @@ export function KycDemoStepper({
   sessionValid: boolean;
   configDirty?: boolean;
   onConfigChange?: () => void;
-  step2ContentRef?: React.RefObject<HTMLDivElement | null>;
+  step2ContentRef?: React.RefObject<HTMLDivElement>;
   redirectResult: RedirectResult;
   guid: string | undefined;
   submissionId: string | undefined;
@@ -180,8 +180,8 @@ export function KycDemoStepper({
               activeForm={activeForm}
               cpfMasked={cpfMasked}
               openRedirectDemo={openRedirectDemo}
-            onStartOver={onReset}
-            logs={logs}
+              onStartOver={onReset}
+              logs={logs}
               status={status}
               step={step}
             />

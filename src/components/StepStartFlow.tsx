@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import { useTranslation } from "react-i18next";
 
 type DemoMode = "iframe" | "redirect";
-type FlowType = "onboarding" | "liveness";
+type FlowType = "onboarding" | "resume" | "liveness";
 
 function maskCpf(cpf: string): string {
   if (!cpf || cpf.replace(/\D/g, "").length < 4) return "***.***.***-**";
@@ -63,7 +63,9 @@ export function StepStartFlow({
             <span className="font-medium">{t("start.flowLabel")}</span>{" "}
             {activeForm === "onboarding"
               ? t("start.flowValue.onboarding")
-              : t("start.flowValue.liveness")}
+              : activeForm === "resume"
+                ? t("start.flowValue.resume")
+                : t("start.flowValue.liveness")}
           </li>
           {guid && (
             <li className="font-mono text-xs break-all">
