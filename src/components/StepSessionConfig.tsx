@@ -28,7 +28,7 @@ export function StepSessionConfig({
   setDemoMode: (m: DemoMode) => void;
   activeForm: FlowType;
   setActiveForm: (f: FlowType) => void;
-  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string, redirectUrl?: string) => void;
+  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string) => void;
   onReset: () => void;
   guid: string | undefined;
   configDirty?: boolean;

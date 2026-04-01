@@ -6,7 +6,7 @@ import { useLivenessSession } from "@/hooks/useLivenessSession";
 import { useTranslation } from "react-i18next";
 
 interface LivenessFormProps {
-  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string, redirectUrl?: string) => void;
+  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string) => void;
   onReset?: () => void;
   isProcessStarted?: boolean;
   embedded?: boolean;
@@ -41,7 +41,7 @@ export function LivenessForm({
     try {
       const data = await mutateAsync({ cpf: cpfDigits });
       if (!data.guid) throw new Error("guid_missing");
-      onGuidGenerated(data.guid, data.submission_id, cpf, data.redirect_url);
+      onGuidGenerated(data.guid, data.submission_id, cpf);
     } catch {
       setError(t("forms.liveness.startFailed"));
     } finally {

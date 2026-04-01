@@ -22,7 +22,6 @@ export function DemoSection({
   const [guid, setGuid] = useState<string | undefined>(initialGuid);
   const [submissionId, setSubmissionId] = useState<string | undefined>();
   const [cpfMasked, setCpfMasked] = useState<string | undefined>();
-  const [livenessRedirectUrl, setLivenessRedirectUrl] = useState<string | undefined>();
   const [activeForm, setActiveForm] = useState<FlowType>("onboarding");
   const [demoMode, setDemoMode] = useState<DemoMode>(
     redirectResult.isFromRedirect ? "redirect" : "iframe"
@@ -60,13 +59,11 @@ export function DemoSection({
   const handleGuidGenerated = (
     newGuid: string,
     newSubmissionId?: string,
-    newCpfMasked?: string,
-    newRedirectUrl?: string
+    newCpfMasked?: string
   ) => {
     setGuid(newGuid);
     setSubmissionId(newSubmissionId);
     setCpfMasked(newCpfMasked);
-    setLivenessRedirectUrl(newRedirectUrl);
     setConfigDirty(false);
     setActiveStep(1);
   };
@@ -76,7 +73,6 @@ export function DemoSection({
     setGuid(undefined);
     setSubmissionId(undefined);
     setCpfMasked(undefined);
-    setLivenessRedirectUrl(undefined);
     setConfigDirty(false);
     setActiveStep(0);
     clearLogs();
@@ -86,13 +82,22 @@ export function DemoSection({
 
   const openRedirectDemo = () => {
     if (!guid) return;
-    if (activeForm === "liveness" && livenessRedirectUrl) {
-      window.open(livenessRedirectUrl, "_blank");
-      return;
-    }
     const base = `${window.location.origin}${window.location.pathname}`;
     const redirectUrl = `${base}${base.includes("?") ? "&" : "?"}kycRedirect=1`;
     const state = `demo-${Date.now()}`;
+    if (activeForm === "liveness") {
+      if (!submissionId) return;
+      const url = buildKycUrl({
+        guid,
+        step: 1,
+        flow: "liveness",
+        submissionId,
+        redirectUrl,
+        state,
+      });
+      window.open(url, "_blank");
+      return;
+    }
     const url = buildKycUrl({
       guid,
       step: 1,

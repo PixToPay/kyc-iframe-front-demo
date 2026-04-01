@@ -62,7 +62,7 @@ export function KycDemoStepper({
   setDemoMode: (m: DemoMode) => void;
   activeForm: FlowType;
   setActiveForm: (f: FlowType) => void;
-  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string, redirectUrl?: string) => void;
+  onGuidGenerated: (guid: string, submissionId?: string, cpfMasked?: string) => void;
   onReset: () => void;
   openRedirectDemo: () => void;
   logs: unknown[];
